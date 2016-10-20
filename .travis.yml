@@ -1,0 +1,45 @@
+language: c
+sudo: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+      - g++
+      - gfortran
+      - valgrind
+      - csh
+      - g++-multilib
+      - gcc-multilib
+
+branches:
+  only:
+    - master
+
+install:
+  - source devtools/travis-ci/install.sh
+
+script:
+  # Create a test environment
+  - conda create --yes -n test python=$python
+  # Activate the test environment
+  - source activate test
+  # Add org channel
+  - conda config --add channels ${ORGNAME}
+  - conda install --yes --quiet pip
+  # Build the recipe
+  - conda build devtools/conda-recipe
+  # Install the package
+  - conda install --yes --use-local ${PACKAGENAME}
+  # Install testing dependencies
+  - conda install --yes --quiet nose nose-timer
+
+env:
+  matrix:
+    - python=2.7  CONDA_PY=27
+    - python=3.4  CONDA_PY=34
+    - python=3.5  CONDA_PY=35
+
+  global:
+    - ORGNAME="omnia"
+    - PACKAGENAME="yank-examples"

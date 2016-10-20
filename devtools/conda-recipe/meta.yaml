@@ -1,0 +1,24 @@
+package:
+  name: yank-examples
+  version: !!str 0.0.0
+
+source:
+  path: ../..
+
+requirements:
+  build:
+    - yank
+
+  run:
+    - yank
+
+test:
+  requires:
+    - nose
+    - nose-timer
+  imports:
+    - yank
+
+about:
+  home: https://github.com/choderalab/yank-examples
+  license: MIT License
