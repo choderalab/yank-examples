@@ -1,12 +1,20 @@
 # Set up p-xylene binding to T4 lysozyme L99A using AmberTools
 
-## Manifest
-* `setup.sh` - shell script to run whole setup pipeline to regenerate YANK input files
-     Requires OpenEye Python toolkits, pdbfixer, and AmberTools
-* `generate-mol2-from-name.py` - Python script to generate ligand Tripos mol2 file from IUPAC or common name
-     Requires OpenEye Python toolkits.
-* `setup.leap.in` - input file for AmberTools tleap
-* `187L.pdb` - source PDB file for p-xylene bound to T4 lysozyme L99A
-* `p-xylene.tripos.mol2` - p-xylene in Tripos mol2 format
-* `run.sh` - shell script to run YANK simulation
-* `run-torque.sh` - shell script to run YANK on a cluster, will need customized for your system
+## Rebuilding files from scratch
+
+This section covers a how-to for generating the same input files that 
+came bundled with these examples. 
+
+### Recreating the Protein:
+
+Run `setup-protein.sh`. Uses [PDBFixer](https://github.com/pandegroup/pdbfixer) 
+(also available through the `omnia` conda channel, just like YANK is!)
+
+### Recreating the Protein
+
+Change the `yank.yaml` file in this example. Change 
+`filepath: setup/ligand.tripos.mol2` to `name: p-xylene`.
+
+This uses the OpenEye Toolkit build the ligand on the fly. If you need 
+the physical file, let YANK setup the simulation and then find the 
+file in the `setup` directory of YANK's output directory.
