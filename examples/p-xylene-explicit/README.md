@@ -1,5 +1,10 @@
 # p-xylene binding to T4 lysozyme L99A in TIP3P solvent with reaction-field electrostatics example
 
+## Tutorial
+
+For a step-by-step walk through of using this example, please see 
+[our guide on the YANK web page](http://getyank.org/examples) *PLACEHOLDER*
+
 ## Description
 
 The ligand is parameterized using the GAFF forcefield with the AM1-BCC charge model.
