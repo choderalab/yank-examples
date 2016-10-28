@@ -1,0 +1,59 @@
+# Set the general options of our simulation
+options:
+  minimize: yes
+  verbose: yes
+  number_of_iterations: 500
+  temperature: 300*kelvin
+  restraint_type: FlatBottom  # Set restraints to keep guest near host in implicit solvent
+  pressure: null # Run with NVT ensemble by setting to "null"
+  output_dir: hgoutput # Does not have to be set, but we do here to show the different outputs
+
+
+# Configure the specific molecules we will use for our systems
+molecules:
+  # Define our Host, cucurbit[7]uril, we can call it whatever we want so we just use its name here as the directive
+  cucurbit:
+    filepath: setup/host.tripos.mol2
+    leap: # Tell YANK to get the parameters from GAFF2 force field (AmberTools/AmberMini v16+) along with the extra parameter from parmchk
+      parameters: leaprc.gaff2
+  # Define our ligand molecule, B2
+  B2:
+    filepath: setup/guest.tripos.mol2
+    # Get the partial charges for the ligand by generating them from antechamber with the AM1-BCC charge method
+    antechamber:
+      charge_method: bcc
+
+# Define the solvent for our system, here we use GBSA Implicit Solvent
+solvents:
+  # We can title this solvent whatever we want. We just call it "GBSA" for easy remembering
+  GBSA:
+    nonbonded_method: NoCutoff # Main definition of the nonbonded method
+    implicit_solvent: OBC2 # Onufriev-Bashford-Case GBSA model, name is related to Implicit solvents in OpenMM
+
+# Define the systems: What is the ligand, receptor, and solvent we put them in
+systems:
+  host-guest:
+    # These names all use the names we defined previously
+    receptor: cucurbit
+    ligand: B2
+    solvent: GBSA
+    leap:
+      parameters: leaprc.gaff2
+
+# The protocols define the alchemical path each phase will take, we use the same lambda values, though they could be different
+protocols:
+  # Call the protocol whatever you would like, here we name it based on the type of calculation we are running
+  absolute-binding:
+    complex:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+    solvent:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+
+# Here we combine the system and the protocol to make an expirement
+experiments:
+  system: host-guest
+  protocol: absolute-binding
