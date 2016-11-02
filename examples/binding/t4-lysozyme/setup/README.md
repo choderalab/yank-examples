@@ -12,7 +12,7 @@ Run `setup-protein.sh`. Uses [PDBFixer](https://github.com/pandegroup/pdbfixer)
 
 ### Recreating the Protein
 
-Change the `yank.yaml` file in this example. Change 
+Change either `*.yaml` file in this example. Change 
 `filepath: setup/ligand.tripos.mol2` to `name: p-xylene`.
 
 This uses the OpenEye Toolkit build the ligand on the fly. If you need 
