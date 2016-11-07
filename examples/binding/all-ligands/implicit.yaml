@@ -1,0 +1,65 @@
+# Set the general options of our simulation
+options:
+  minimize: yes
+  verbose: yes
+  number_of_iterations: 500
+  temperature: 300*kelvin
+  pressure: null
+  output_dir: output
+
+# Configure the specific molecules we will use for our systems
+molecules:
+  # Define our receptor, T4-Lysozyme, we can call it whatever we want so we just use its name here as the directive
+  t4-lysozyme:
+    filepath: input/receptor.pdbfixer.pdb
+    leap:
+      parameters: oldff/leaprc.ff14SB
+  # Define our ligands
+  binders:
+    # This is actually a "CSV" file where the delimeter is a space
+    # This file is full of multiple molecules
+    filepath: input/L99A-binders.txt
+    antechamber:
+      charge_method: bcc
+    # Choose to simulate all molecules (1 at a time).
+    # This is the default behavior but we specify it for this example
+    select: all
+  non-binders:
+    filepath: input/L99A-non-binders.txt
+    antechamber:
+      charge_method: bcc
+    # Seclecting only the non-binders with oxygen
+    # This is only to show how the select syntax works
+    select: !Combinatorial [4,5,6,7,10,11,12,13,14,15,18,19,28,29,30,31,32,33,34,35,36,37,41,42,43,48,49,50,56,58,59]
+
+# Define the solvent for our system
+solvents:
+  pme:
+    nonbonded_method: NoCutoff
+    implicit_solvent: OBC2
+
+systems:
+  t4-ligand:
+    receptor: t4-lysozyme
+    # If we specified only only one of the molecule sets, YNAK would run through each of the molecules in that list,
+    # However, by specifing !Combinatorial, we can run both of the sets from the same expirement.
+    ligand: !Combinatorial [binders, non-binders]
+    solvent: pme
+    leap:
+      parameters: [oldff/leaprc.ff14SB, leaprc.gaff2, frcmod.ionsjc_tip3p]
+
+protocols:
+  absolute-binding:
+    complex:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+    solvent:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+
+# Here we combine the system and the protocol to make an expirement
+experiments:
+  system: t4-ligand
+  protocol: absolute-binding
