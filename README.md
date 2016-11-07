@@ -1,7 +1,7 @@
 [![Travis Build Status](https://travis-ci.org/choderalab/yank-examples.png)](https://travis-ci.org/choderalab/yank-examples)
 [![Anaconda Cloud Badge](https://anaconda.org/omnia/yank-examples/badges/version.svg)](https://anaconda.org/omnia/yank-examples)
 [![Anaconda Cloud Downloads](https://anaconda.org/omnia/yank-examples/badges/downloads.svg)](https://anaconda.org/omnia/yank-examples)
-[//]: <> [![DOI](https://zenodo.org/badge/????????.svg)](https://zenodo.org/badge/latestdoi/????????)
+[![DOI](https://zenodo.org/badge/71493092.svg)](https://zenodo.org/badge/latestdoi/71493092)
 
 # Examples for YANK
 
