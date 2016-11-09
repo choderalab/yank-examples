@@ -38,5 +38,11 @@ into any directory you prefer, so long as the pre-requisites are installed.
 
 All example files are in the `examples` folder.
 
-* `binding/t4-lysozyme` - Absolute binding of para-xylene to T4-Lysozyme, both implicit and explicit solvent
+* `binding/t4-lysozyme` - Absolute binding of T4-Lysozyme, both implicit and explicit solvent
+    * Binding for para-xylene from mol2 files
+    * Binding for a series of binders and non-binders generated from SMILES strings (requires OpenEye Toolkits)
 * `binding/host-guest` - Host-Guest absolute binding system guest B2 to host cucurbit\[7\]uril in implciit solvent
+* `hydration/phenol` - Hydration free energy of phenol molecule in water for both implicit and explicit solvents
+* `hydration/freesolv` - Hydration free energy of a subset of the FreeSolv database.
+    * Molecules generated from SMILES strings (requires OpenEye Toolkits)
+    * Multiple simulations configured at once from YANK's `!Combinatorial` feature.
