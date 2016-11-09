@@ -30,7 +30,7 @@ fi
 
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
-build_mpirun_configfile "yank script --yaml=implicit.yaml"
+build_mpirun_configfile "yank script --yaml=p-xylene-explicit.yaml"
 mpiexec.hydra -configfile configfile
 date
 
