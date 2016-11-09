@@ -31,6 +31,10 @@ script:
   - conda build devtools/conda-recipe
   # Install the package
   - conda install --yes --use-local ${PACKAGENAME}
+  # Install testing dependencies
+  - conda install --yes --quiet nose nose-timer
+  # Test the package
+  - cd tests && nosetests . --nocapture --verbosity=2 --with-timer -a '!slow' && cd ..
 
 env:
   matrix:
