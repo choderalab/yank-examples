@@ -4,7 +4,8 @@ options:
   verbose: yes
   number_of_iterations: 500
   temperature: 300*kelvin
-  pressure: 1*atmosphere
+  pressure: null
+  output_dir: all-ligands-out
 
 # Configure the specific molecules we will use for our systems
 molecules:
@@ -17,14 +18,14 @@ molecules:
   binders:
     # This is actually a "CSV" file where the delimeter is a space
     # This file is full of multiple molecules
-    filepath: input/L99A-binders.txt
+    filepath: input/L99A-binders.csv
     antechamber:
       charge_method: bcc
     # Choose to simulate all molecules (1 at a time).
     # This is the default behavior but we specify it for this example
     select: all
   non-binders:
-    filepath: input/L99A-non-binders.txt
+    filepath: input/L99A-non-binders.csv
     antechamber:
       charge_method: bcc
     # Seclecting only the non-binders with oxygen
@@ -33,12 +34,9 @@ molecules:
 
 # Define the solvent for our system
 solvents:
-  pme:
-    nonbonded_method: PME
-    nonbonded_cutoff: 9*angstroms
-    clearance: 16*angstroms
-    positive_ion: Na+
-    negative_ion: Cl-
+  GBSA:
+    nonbonded_method: NoCutoff
+    implicit_solvent: OBC2
 
 systems:
   t4-ligand:
@@ -46,7 +44,7 @@ systems:
     # If we specified only only one of the molecule sets, YNAK would run through each of the molecules in that list,
     # However, by specifing !Combinatorial, we can run both of the sets from the same expirement.
     ligand: !Combinatorial [binders, non-binders]
-    solvent: pme
+    solvent: GBSA
     leap:
       parameters: [oldff/leaprc.ff14SB, leaprc.gaff2, frcmod.ionsjc_tip3p]
 

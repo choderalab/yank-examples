@@ -10,10 +10,10 @@ came bundled with these examples.
 Run `setup-protein.sh`. Uses [PDBFixer](https://github.com/pandegroup/pdbfixer) 
 (also available through the `omnia` conda channel, just like YANK is!)
 
-### Recreating the Protein
+### Recreating the p-xylene ligand
 
 Change either `*.yaml` file in this example. Change 
-`filepath: setup/ligand.tripos.mol2` to `name: p-xylene`.
+`filepath: input/ligand.tripos.mol2` to `name: p-xylene`.
 
 This uses the OpenEye Toolkit build the ligand on the fly. If you need 
 the physical file, let YANK setup the simulation and then find the 
