@@ -6,7 +6,6 @@ options:
   number_of_iterations: 100
   nsteps_per_iteration: 500
   temperature: 300*kelvin
-  pressure: 1*atmosphere
   restraint_type: Boresch
   softcore_beta: 0.0
   timestep: 2.0*femtoseconds
