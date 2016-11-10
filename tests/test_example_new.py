@@ -99,3 +99,78 @@ def run_examples(example_directory, yaml_name):
         if return_code:
             raise Exception('Example %s returned exit code %d' % (example_directory, return_code))
     return
+
+
+def test_t4_p_xylene_explicit():
+    """
+    Test p-xylene binding to t4 lysozyme example in explicit solvent
+    """
+    example_dir = os.path.join('binding', 't4-lysozyme')
+    yaml_name = 'p-xylene-explicit.yaml'
+    run_examples(example_dir, yaml_name)
+
+
+def test_t4_p_xylene_implciit():
+    """
+    Test p-xylene binding to t4 lysozyme example in implicit solvent
+    """
+    example_dir = os.path.join('binding', 't4-lysozyme')
+    yaml_name = 'p-xylene-impicit.yaml'
+    run_examples(example_dir, yaml_name)
+
+
+@attr('!slow')
+def test_t4_all_ligands_explicit():
+    """
+    Test that the all-binders to t4 lysozyme example works in explicit solvent
+    This is a slow test
+    """
+    example_dir = os.path.join('binding', 't4-lysozyme')
+    yaml_name = 'all-ligands-explicit.yaml'
+    run_examples(example_dir, yaml_name)
+
+
+@attr('!slow')
+def test_t4_all_ligands_implicit():
+    """
+    Test that the all-binders to t4 lysozyme example works in implicit solvent
+    This is a slow test
+    """
+    example_dir = os.path.join('binding', 't4-lysozyme')
+    yaml_name = 'all-ligands-implicit.yaml'
+    run_examples(example_dir, yaml_name)
+
+
+def test_hydration_phenol_implicit():
+    """
+    Test that the phenol hydration implicit example
+    """
+    example_dir = os.path.join('hydration', 'phenol')
+    yaml_name = 'implicit.yaml'
+    run_examples(example_dir, yaml_name)
+
+
+def test_hydration_phenol_explicit():
+    """
+    Test that the phenol hydration explicit example
+    """
+    example_dir = os.path.join('hydration', 'phenol')
+    yaml_name = 'explicit.yaml'
+    run_examples(example_dir, yaml_name)
+
+def test_binding_host_guest():
+    """
+    Test the host guest binding example
+    """
+    example_dir = os.path.join('binding', 'host-guest')
+    yaml_name = 'yank.yaml'
+    run_examples(example_dir, yaml_name)
+
+
+def test_hydration_freesolv():
+    """
+    Test that the hydration freesolv database example works
+    """
+    example_dir = os.path.join('hydration', 'freesolv')
+    yaml_name = 'yank.yaml'
+    run_examples(example_dir, yaml_name)
