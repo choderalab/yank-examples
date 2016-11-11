@@ -22,7 +22,7 @@
 ##PBS -V
 #
 # job name (default = name of script file)
-#PBS -N abl-imatinib-explicit
+#PBS -N abl-imatinib-implicit
 
 if [ -n "$PBS_O_WORKDIR" ]; then 
     cd $PBS_O_WORKDIR
@@ -30,7 +30,7 @@ fi
 
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
-build_mpirun_configfile "yank script --yaml=explicit.yaml"
+build_mpirun_configfile "yank script --yaml=implicit.yaml"
 mpirun -configfile configfile
 date
 

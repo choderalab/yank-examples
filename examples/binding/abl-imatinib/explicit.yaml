@@ -7,7 +7,6 @@ options:
   nsteps_per_iteration: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere
-  restraint_type: Boresch
   softcore_beta: 0.0
   timestep: 2.0*femtoseconds
   platform: OpenCL
@@ -58,3 +57,5 @@ protocols:
 experiments:
   system: Abl-STI
   protocol: absolute-binding
+  restraint:
+    type: Boresch
