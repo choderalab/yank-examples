@@ -5,19 +5,21 @@ options:
   number_of_iterations: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere # To run with NVT ensemble, set this option to "null". Defaults to 1 atm if excluded
-
+  platform: OpenCL
+  setup_dir: setup
+  output_dir: explicit-output
 
 # Configure the specific molecules we will use for our systems
 # Note: We do not specify what the "receptor" and what the "ligand" is yet
 molecules:
   # Define our receptor, T4-Lysozyme, we can call it whatever we want so we just use its name here as the directive
   t4-lysozyme:
-    filepath: setup/receptor.pdbfixer.pdb
+    filepath: input/receptor.pdbfixer.pdb
     leap: # Tell YANK to get the parameters from the old FF14SB force field (AmberTools/AmberMini v16+)
       parameters: oldff/leaprc.ff14SB
   # Define our ligand molecule
   p-xylene:
-    filepath: setup/ligand.tripos.mol2
+    filepath: input/ligand.tripos.mol2
     # Get the partial charges for the ligand by generating them from antechamber with the AM1-BCC charge method
     antechamber:
       charge_method: bcc
@@ -63,3 +65,4 @@ protocols:
 experiments:
   system: t4-xylene
   protocol: absolute-binding
+

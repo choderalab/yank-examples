@@ -3,7 +3,7 @@
 #  Adjust your script as needed for your clusters!
 #
 # walltime : maximum wall clock time (hh:mm:ss)
-#PBS -l walltime=0:10:00
+#PBS -l walltime=24:00:00
 #
 # join stdout and stderr
 #PBS -j oe
@@ -30,7 +30,7 @@ fi
 
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
-build_mpirun_configfile "yank script --yaml=explicit.yaml"
-mpiexec.hydra -configfile configfile
+build_mpirun_configfile --configfilepath configfile-explicit "yank script --yaml=explicit.yaml"
+mpiexec.hydra -configfile configfile-explicit
 date
 
