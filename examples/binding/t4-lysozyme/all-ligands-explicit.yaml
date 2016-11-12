@@ -66,3 +66,5 @@ protocols:
 experiments:
   system: t4-ligand
   protocol: absolute-binding
+  restraint:
+    type: Harmonic # Keep the ligand near the protein
