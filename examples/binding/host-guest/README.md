@@ -15,9 +15,7 @@ Files acquired from [the AMBER tutorial of the same system](http://ambermd.org/t
 For a step-by-step walk through of using this example, please see 
 [our guide on the YANK web page](http://getyank.org/examples) *PLACEHOLDER*
 
-## Running the simulation.
-
-## Running the simulation.
+## Running the simulation
 
 Set up the simulation to alchemically decouple p-xylene from cucurbit[7]uril, 
 putting all the output files in `hgoutput/`:

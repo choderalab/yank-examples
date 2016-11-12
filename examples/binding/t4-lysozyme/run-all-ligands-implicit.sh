@@ -6,7 +6,7 @@
 
 # Run the simulation
 echo "Running simulation..."
-yank script --yaml=explicit.yaml
+yank script --yaml=all-ligands-implicit.yaml
 
 # Analyze the data
 echo "Analyzing data..."

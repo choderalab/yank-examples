@@ -22,7 +22,7 @@
 ##PBS -V
 #
 # job name (default = name of script file)
-#PBS -N p-xylene-explicit
+#PBS -N t4-p-xylene-implicit
 
 if [ -n "$PBS_O_WORKDIR" ]; then 
     cd $PBS_O_WORKDIR
@@ -30,7 +30,8 @@ fi
 
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
-build_mpirun_configfile --configfilepath configfile-explicit "yank script --yaml=explicit.yaml"
-mpiexec.hydra -configfile configfile-explicit
+export PREFIX="p-xylene-implicit"
+build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
+mpiexec.hydra -configfile $PREFIX.configfile
 date
 
