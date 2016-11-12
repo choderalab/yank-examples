@@ -40,3 +40,4 @@ All example files are in the `examples` folder.
 
 * `binding/t4-lysozyme` - Absolute binding of para-xylene to T4-Lysozyme, both implicit and explicit solvent
 * `binding/host-guest` - Host-Guest absolute binding system guest B2 to host cucurbit\[7\]uril in implciit solvent
+* `binding/abl-imatinib` - Absolute binding free energy calculation to three dominant protonation states of imatinib to Abl at pH 7.4
