@@ -32,7 +32,7 @@ fi
 echo "Running simulation via MPI..."
 export PREFIX="implicit"
 build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
-mpirun -configfile configfile.$PREFIX
+mpirun -configfile $PREFIX.configfile
 date
 
 
