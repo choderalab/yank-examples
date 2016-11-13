@@ -9,6 +9,7 @@ options:
   softcore_beta: 0.0
   timestep: 2.0*femtoseconds
   platform: OpenCL
+  output_dir: implicit
   resume_setup: yes
   resume_simulation: yes
 
