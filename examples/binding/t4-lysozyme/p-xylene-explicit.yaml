@@ -65,4 +65,4 @@ experiments:
   system: t4-xylene
   protocol: absolute-binding
   restraint:
-    type: Harmonic # Keep the ligand near the protein
+    type: null
