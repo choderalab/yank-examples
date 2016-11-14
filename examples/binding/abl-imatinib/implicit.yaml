@@ -6,7 +6,6 @@ options:
   number_of_iterations: 1000
   nsteps_per_iteration: 500
   temperature: 300*kelvin
-  softcore_beta: 0.0
   timestep: 2.0*femtoseconds
   platform: OpenCL
   output_dir: implicit

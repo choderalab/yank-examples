@@ -14,8 +14,6 @@ molecules:
   # Define our receptor, T4-Lysozyme, we can call it whatever we want so we just use its name here as the directive
   t4-lysozyme:
     filepath: input/receptor.pdbfixer.pdb
-    leap: # Tell YANK to get the parameters from the old FF14SB force field (AmberTools/AmberMini v16+)
-      parameters: oldff/leaprc.ff14SB
   # Define our ligand molecule
   p-xylene:
     filepath: input/ligand.tripos.mol2
@@ -60,9 +58,7 @@ protocols:
         lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
         lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
 
-# Here we combine the system and the protocol to make an expirement
+# Here we combine the system and the protocol to make an experiment
 experiments:
   system: t4-xylene
   protocol: absolute-binding
-  restraint:
-    type: null

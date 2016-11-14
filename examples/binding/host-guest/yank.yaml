@@ -14,8 +14,6 @@ molecules:
   # Define our Host, cucurbit[7]uril, we can call it whatever we want so we just use its name here as the directive
   cucurbit:
     filepath: input/host.tripos.mol2
-    leap: # Tell YANK to get the parameters from GAFF2 force field (AmberTools/AmberMini v16+) along with the extra parameter from parmchk
-      parameters: leaprc.gaff2
     antechhamber: # Specify that missing parameters not in GAFF are acquired through ANTECHAMBER first
       charge_method: null # We pre-computed host charges to save time at YANK run, so set this to null to specify no charge computation method
   # Define our ligand molecule, B2

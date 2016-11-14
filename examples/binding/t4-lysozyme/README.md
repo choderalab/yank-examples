@@ -7,8 +7,7 @@ There are several tutorials contained in this folder.
 For the introductory p-xylene binding in TIP3P water tutorial, please see: 
 [our introduction tutorial on the YANK website](http://getyank.org/latest/examples/p-xylene-explicit.html)
 
-For the example where we bind all binders and non-binders from two files 
-with SMILES string, please see:
+For the example where we bind all binders with SMILES string, please see:
 [our tutorial here](http://getyank.org/latest/examples/all-ligand-explicit.html).
 This particular example requires the OpenEye Toolkits 
 to process the SMILES strings and makes use of the `!Combinatorial` argument.
@@ -31,8 +30,7 @@ to process the SMILES strings and makes use of the `!Combinatorial` argument.
 * `run-all-ligands-implicit.sh` - Run the all-ligands binding example in implicit solvent.
 * `run-torque-all-ligands-explicit.sh` - Run the all-ligands binding example in explicit water on a torque cluster. May require tweaking for your cluster.
 * `run-torque-all-ligands-implicit.sh` - Run the all-ligands binding example in implicit solvent on a torque cluster. May require tweaking for your cluster.
-* `input/L99A-binders.csv` - CSV file containing multiple known binders for T4 Lysozyme
-* `input/L99-non-binders.csv` - CSV file containing multiple known non-binders for T4 Lysozyme
+* `input/L99A-binders.csv` - CSV file containing SMILES representation of few known binders for T4 Lysozyme.
 
 ### Other Files
 * `input/receptor.pdbfixer.pdb` - T4 Lysozyme L99A mutant. This has been pre-processed through PDBFixer. 
@@ -62,11 +60,11 @@ Replace files with their appropriate implicit name for implicit solvent.
 
 This example uses CSV file to construct ligands from SMILES through the 
 OpenEye Toolkits. Note that this example will take a long time to run 
-due to the size of the binder/non-binder library.
+due to the size of the binder library.
 
-This example takes advantage of the `!Combinatorial` command to setup and 
-run multiple different simulations back to back to back. This lets you run 
-all the molecules from a single command and YAML file
+The implicit example takes advantage of the `!Combinatorial` command to setup and
+run multiple different simulations back to back. This lets you run
+all the molecules from a single command and YAML file.
 
 Set up the simulation to alchemically decouple p-xylene from T4-Lysozyme, putting all the output files in `all-ligands-out/`:
 ```bash
