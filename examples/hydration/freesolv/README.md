@@ -2,8 +2,8 @@
 
 ## Tutorial
 
-For a step-by-step walk through of using this example, please see 
-[our guide on the YANK web page](http://getyank.org/examples) *PLACEHOLDER*
+For a walk through of the files in this example, and running it, please see 
+[our guide on the YANK web page](http://getyank.org/latest/examples/freesolv-imp-exp.html)
 
 ## Description
 

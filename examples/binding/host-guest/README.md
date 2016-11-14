@@ -13,7 +13,7 @@ Files acquired from [the AMBER tutorial of the same system](http://ambermd.org/t
 ## Tutorial
 
 For a step-by-step walk through of using this example, please see 
-[our guide on the YANK web page](http://getyank.org/examples) *PLACEHOLDER*
+[our host-guest tutorial](http://getyank.org/latest/examples/host-guest-implicit.html).
 
 ## Running the simulation
 
