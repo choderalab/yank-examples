@@ -60,9 +60,7 @@ protocols:
         lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
         lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
 
-# Here we combine the system and the protocol to make an expirement
+# Here we combine the system and the protocol to make an experiment
 experiments:
   system: t4-xylene
   protocol: absolute-binding
-  restraint:
-    type: null

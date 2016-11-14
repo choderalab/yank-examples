@@ -16,23 +16,16 @@ molecules:
       parameters: oldff/leaprc.ff14SB
   # Define our ligands
   binders:
-    # This is actually a "CSV" file where the delimeter is a space
-    # This file is full of multiple molecules
+    # This is actually a "CSV" file where the delimiter is a comma or a
+    # semicolon, and each row contains the SMILES representation of a molecule.
     filepath: input/L99A-binders.csv
     antechamber:
       charge_method: bcc
-    # Choose to simulate all molecules (1 at a time).
-    # This is the default behavior but we specify it for this example
-    # We need to exclude sec-butylbenzene because of uncertain stereochemistry (48)
-    select: !Combinatorial [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,48,49,50,51,52,53]
-  non-binders:
-    filepath: input/L99A-non-binders.csv
-    antechamber:
-      charge_method: bcc
-    # Seclecting only the non-binders with oxygen
-    # This is only to show how the select syntax works
-    # We need to omit p-cresol (28) and benzaldehyde oxime (34) because of uncertain stereochemistry
-    select: !Combinatorial [4,5,6,7,10,11,12,13,14,15,18,19,29,30,31,32,33,35,36,37,41,42,43,48,49,50,56,58,59]
+    # Select all molecules from the file. In this case, the syntax is
+    # completely equivalent to "select: all". Here it is shown only to
+    # illustrate the usage of the "!Combinatorial" keyword to extract
+    # a subset of rows from the CSV file.
+    select: !Combinatorial [0,1,2,3]
 
 # Define the solvent for our system
 solvents:
@@ -43,9 +36,7 @@ solvents:
 systems:
   t4-ligand:
     receptor: t4-lysozyme
-    # If we specified only only one of the molecule sets, YNAK would run through each of the molecules in that list,
-    # However, by specifing !Combinatorial, we can run both of the sets from the same expirement.
-    ligand: !Combinatorial [binders, non-binders]
+    ligand: binders
     solvent: GBSA
     leap:
       parameters: [oldff/leaprc.ff14SB, leaprc.gaff2, frcmod.ionsjc_tip3p]
@@ -61,7 +52,7 @@ protocols:
         lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
         lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
 
-# Here we combine the system and the protocol to make an expirement
+# Here we combine the system and the protocol to make an experiment
 experiments:
   system: t4-ligand
   protocol: absolute-binding
