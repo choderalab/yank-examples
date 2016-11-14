@@ -5,11 +5,11 @@
 There are several tutorials contained in this folder.
 
 For the introductory p-xylene binding in TIP3P water tutorial, please see: 
-[our guide on the YANK web page](http://getyank.org/examples) *PLACEHOLDER*
+[our introduction tutorial on the YANK website](http://getyank.org/latest/examples/p-xylene-explicit.html)
 
 For the example where we bind all binders and non-binders from two files 
 with SMILES string, please see:
-[our guide on the YANK web page](http://getyank.org/examples) *PLACEHOLDER*.
+[our tutorial here](http://getyank.org/latest/examples/all-ligand-explicit.html).
 This particular example requires the OpenEye Toolkits 
 to process the SMILES strings and makes use of the `!Combinatorial` argument.
 
