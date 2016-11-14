@@ -53,7 +53,7 @@ $ sh run-p-xylene-explicit.sh
 
 Clean up and delete all simulation files:
 ```bash
-yank cleanup --store=p-xylene-out
+yank cleanup --store=p-xylene-explicit-output
 ```
 
 Replace files with their appropriate implicit name for implicit solvent.
@@ -75,7 +75,7 @@ $ sh run-all-ligands-explicit.sh
 
 Clean up and delete all simulation files:
 ```bash
-yank cleanup --store=all-ligands-out
+yank cleanup --store=all-ligands-explicit-output
 ```
 
 Replace files with their appropriate implicit name for implicit solvent.

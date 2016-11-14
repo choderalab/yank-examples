@@ -1,6 +1,6 @@
 #!/bin/bash
 #  Batch script for mpirun job on cbio cluster.
-#  Adjust your script as needed for your clusters!
+#
 #
 # walltime : maximum wall clock time (hh:mm:ss)
 #PBS -l walltime=24:00:00
@@ -22,7 +22,7 @@
 ##PBS -V
 #
 # job name (default = name of script file)
-#PBS -N t4-p-xylene-implicit
+#PBS -N abl-imatinib-implicit
 
 if [ -n "$PBS_O_WORKDIR" ]; then 
     cd $PBS_O_WORKDIR
@@ -30,8 +30,9 @@ fi
 
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
-export PREFIX="p-xylene-implicit"
+export PREFIX="implicit"
 build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
-mpiexec.hydra -configfile $PREFIX.configfile
+mpirun -configfile $PREFIX.configfile
 date
+
 

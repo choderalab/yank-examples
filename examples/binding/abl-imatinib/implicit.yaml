@@ -1,0 +1,59 @@
+---
+options:
+  minimize: yes
+  verbose: yes
+  output_dir: .
+  number_of_iterations: 1000
+  nsteps_per_iteration: 500
+  temperature: 300*kelvin
+  softcore_beta: 0.0
+  timestep: 2.0*femtoseconds
+  platform: OpenCL
+  output_dir: implicit
+  resume_setup: yes
+  resume_simulation: yes
+
+molecules:
+  Abl:
+    filepath: input/2HYY-pdbfixer.pdb
+  STI:
+    filepath: input/STI02.mol2
+    epik:
+      select: !Combinatorial [0, 1, 2]
+      ph: 7.4
+      ph_tolerance: 7.0
+      tautomerize: no
+    openeye:
+      quacpac: am1-bcc
+    antechamber:
+      charge_method: null
+
+solvents:
+  GBSA:
+    nonbonded_method: NoCutoff # Main definition of the nonbonded method
+    implicit_solvent: OBC2 # Onufriev-Bashford-Case GBSA model, name is related to Implicit solvents in OpenMM
+
+systems:
+  Abl-STI:
+    receptor: Abl
+    ligand: STI
+    solvent: GBSA
+    leap:
+      parameters: [oldff/leaprc.ff14SB, leaprc.gaff2, frcmod.ionsjc_tip3p]
+
+protocols:
+  absolute-binding:
+    complex:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+    solvent:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+
+experiments:
+  system: Abl-STI
+  protocol: absolute-binding
+  restraint:
+    type: Boresch

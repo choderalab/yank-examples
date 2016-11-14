@@ -5,9 +5,7 @@ options:
   number_of_iterations: 500
   temperature: 300*kelvin
   pressure: null # Set this to null for implicit solvent, otherwise a barostat will be added and cause a crash
-  restraint_type: Harmonic # Keep the ligand near the binding pocket
-  output_dir: p-xylene-out
-
+  output_dir: p-xylene-implicit-output
 
 # Configure the specific molecules we will use for our systems
 # Note: We do not specify what the "receptor" and what the "ligand" is yet
@@ -59,3 +57,5 @@ protocols:
 experiments:
   system: t4-xylene
   protocol: absolute-binding
+  restraint:
+    type: Harmonic # Keep the ligand near the protein

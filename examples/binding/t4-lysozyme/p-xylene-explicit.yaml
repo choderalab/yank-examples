@@ -5,8 +5,8 @@ options:
   number_of_iterations: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere # To run with NVT ensemble, set this option to "null". Defaults to 1 atm if excluded
-  output_dir: p-xylene-out
-
+  platform: OpenCL
+  output_dir: p-xylene-explicit-output
 
 # Configure the specific molecules we will use for our systems
 # Note: We do not specify what the "receptor" and what the "ligand" is yet
@@ -64,3 +64,5 @@ protocols:
 experiments:
   system: t4-xylene
   protocol: absolute-binding
+  restraint:
+    type: null

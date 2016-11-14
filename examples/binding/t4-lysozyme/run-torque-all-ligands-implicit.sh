@@ -3,7 +3,7 @@
 #  Adjust your script as needed for your clusters!
 #
 # walltime : maximum wall clock time (hh:mm:ss)
-#PBS -l walltime=0:10:00
+#PBS -l walltime=24:00:00
 #
 # join stdout and stderr
 #PBS -j oe
@@ -22,7 +22,7 @@
 ##PBS -V
 #
 # job name (default = name of script file)
-#PBS -N p-xylene-explicit
+#PBS -N t4-all-ligands-implicit
 
 if [ -n "$PBS_O_WORKDIR" ]; then 
     cd $PBS_O_WORKDIR
@@ -30,7 +30,8 @@ fi
 
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
-build_mpirun_configfile "yank script --yaml=implicit.yaml"
-mpiexec.hydra -configfile configfile
+export PREFIX="all-ligands-implicit"
+build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
+mpiexec.hydra -configfile $PREFIX.configfile
 date
 
