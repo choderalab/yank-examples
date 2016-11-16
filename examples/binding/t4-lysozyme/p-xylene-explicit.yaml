@@ -51,8 +51,10 @@ protocols:
   absolute-binding:
     complex:
       alchemical_path:
-        lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+        lambda_electrostatics: [1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
+        # Set lambda restraints reverse of coupling parameter (see below in "restraint" for reason)
+        lambda_restraints:     [0.00, 0.25, 0.50, 0.75, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]
     solvent:
       alchemical_path:
         lambda_electrostatics: [1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
@@ -62,3 +64,11 @@ protocols:
 experiments:
   system: t4-xylene
   protocol: absolute-binding
+  restraint:
+    type: Harmonic # Keep the ligand near the protein
+    # We set a harmonic restraint which biases the ligand to remain close to the receptor when it is decoupled
+    # to prevent it from drifting into the whole box and possibly never visiting the binidng site again.
+    # The Harmonic restraint is fairly weak since it restrains a single ligand atom to the centroid-most receptor atom,
+    # which may or may not be a binding site.
+    # The restraint is opposite the coupling parameter since we want the ligand unrestrained in the binding site
+    # We correct for the free energy of this restraint through the `standard_state_correction` calculated automatically.
