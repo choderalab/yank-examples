@@ -10,4 +10,4 @@ yank script --yaml=all-ligands-explicit.yaml
 
 # Analyze the data
 echo "Analyzing data..."
-yank analyze --store=experiments
+yank analyze --store=all-ligands-explicit-output

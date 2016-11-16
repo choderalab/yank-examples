@@ -10,4 +10,4 @@ yank script --yaml=p-xylene-implicit.yaml
 
 # Analyze the data
 echo "Analyzing data..."
-yank analyze --store=p-xylene-out
+yank analyze --store=p-xylene-implicit-output

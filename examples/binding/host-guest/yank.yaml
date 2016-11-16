@@ -4,7 +4,6 @@ options:
   verbose: yes
   number_of_iterations: 500
   temperature: 300*kelvin
-  restraint_type: FlatBottom  # Set restraints to keep guest near host in implicit solvent
   pressure: null # Run with NVT ensemble by setting to "null"
   output_dir: hgoutput # Does not have to be set, but we do here to show the different outputs
 
@@ -57,3 +56,5 @@ protocols:
 experiments:
   system: host-guest
   protocol: absolute-binding
+  restraint:
+    type: FlatBottom # Set restraints to keep guest near host in implicit solvent
