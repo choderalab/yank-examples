@@ -3,7 +3,7 @@
 #  Adjust your script as needed for your clusters!
 #
 # walltime : maximum wall clock time (hh:mm:ss)
-#PBS -l walltime=0:10:00
+#PBS -l walltime=0:72:00
 #
 # join stdout and stderr
 #PBS -j oe
@@ -22,7 +22,7 @@
 ##PBS -V
 #
 # job name (default = name of script file)
-#PBS -N p-xylene-explicit
+#PBS -N host-guest-implicit
 
 if [ -n "$PBS_O_WORKDIR" ]; then
     cd $PBS_O_WORKDIR
