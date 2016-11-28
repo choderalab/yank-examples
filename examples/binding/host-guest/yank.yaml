@@ -13,7 +13,7 @@ molecules:
   # Define our Host, cucurbit[7]uril, we can call it whatever we want so we just use its name here as the directive
   cucurbit:
     filepath: input/host.tripos.mol2
-    antechhamber: # Specify that missing parameters not in GAFF are acquired through ANTECHAMBER first
+    antechamber: # Specify that missing parameters not in GAFF are acquired through ANTECHAMBER first
       charge_method: null # We pre-computed host charges to save time at YANK run, so set this to null to specify no charge computation method
   # Define our ligand molecule, B2
   B2:
