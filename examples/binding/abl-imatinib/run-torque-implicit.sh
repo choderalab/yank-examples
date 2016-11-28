@@ -3,7 +3,7 @@
 #
 #
 # walltime : maximum wall clock time (hh:mm:ss)
-#PBS -l walltime=24:00:00
+#PBS -l walltime=72:00:00
 #
 # join stdout and stderr
 #PBS -j oe
@@ -16,7 +16,7 @@
 #
 # nodes: number of nodes
 #   ppn: how many cores per node to use
-#PBS -l nodes=1:ppn=4:gpus=4:shared
+#PBS -l nodes=4:ppn=4:gpus=4:shared:gtx680
 #
 # export all my environment variables to the job
 ##PBS -V
