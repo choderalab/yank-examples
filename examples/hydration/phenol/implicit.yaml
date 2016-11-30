@@ -9,7 +9,7 @@ options:
 
 molecules:
   phenol:
-    filepath: phemol.tripos.mol2
+    filepath: phenol.tripos.mol2
     antechamber:
       charge_method: bcc
 
