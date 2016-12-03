@@ -44,7 +44,7 @@ systems:
     ligand: STI
     solvent: pme
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff, frcmod.ionsjc_tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip3p]
 
 protocols:
   absolute-binding:
