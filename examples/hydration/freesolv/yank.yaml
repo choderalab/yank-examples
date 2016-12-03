@@ -32,7 +32,7 @@ systems:
     solvent1: !Combinatorial [pme, GBSA]
     solvent2: vacuum
     leap:
-      parameters: [leaprc.gaff, leaprc.protein.ff14SB]
+      parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip3p]
 
 protocols:
   hydration-protocol:
