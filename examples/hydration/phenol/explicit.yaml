@@ -27,7 +27,7 @@ systems:
     solvent1: water
     solvent2: vacuum
     leap:
-      parameters: [leaprc.gaff, oldff/leaprc.ff14SB]
+      parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip3p]
 
 protocols:
   hydration-protocol:
