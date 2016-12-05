@@ -2,11 +2,10 @@
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 100
+  number_of_iterations: 5000
   temperature: 300*kelvin
   pressure: 1*atmospheres
   output_dir: output # Does not have to be set, but we do here to show the different outputs
-  platform: OpenCL
 
 # Configure the specific molecules we will use for our systems
 molecules:
@@ -52,7 +51,7 @@ systems:
     ligand: B2
     solvent: pme
     leap:
-      parameters: [oldff/leaprc.ff14SB, leaprc.gaff, frcmod.ionsjc_tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip3p]
 
 # The protocols define the alchemical path each phase will take, we use the same lambda values, though they could be different
 protocols:
