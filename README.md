@@ -16,7 +16,7 @@ Detailed guides are available to guide you through these examples through
 
 ## Requirements
 
-* YANK >= 0.12.0
+* YANK >= 0.14.1
 * AmberMini >= 16.16.0
 
 ## Installing through `conda`
