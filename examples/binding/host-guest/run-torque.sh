@@ -16,7 +16,7 @@
 #
 # nodes: number of nodes
 #   ppn: how many cores per node to use
-#PBS -l nodes=2:ppn=4:gpus=4:shared:gtx680
+#PBS -l nodes=2:ppn=4:gpus=4:shared
 #
 # export all my environment variables to the job
 ##PBS -V
