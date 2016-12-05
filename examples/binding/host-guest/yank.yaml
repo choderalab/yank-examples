@@ -6,7 +6,6 @@ options:
   temperature: 300*kelvin
   pressure: 1*atmospheres
   output_dir: output # Does not have to be set, but we do here to show the different outputs
-  platform: OpenCL
 
 # Configure the specific molecules we will use for our systems
 molecules:
