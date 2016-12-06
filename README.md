@@ -16,7 +16,7 @@ Detailed guides are available to guide you through these examples through
 
 ## Requirements
 
-* YANK >= 0.12.0
+* YANK >= 0.14.1
 * AmberMini >= 16.16.0
 
 ## Installing through `conda`
@@ -49,4 +49,13 @@ All example files are in the `examples` folder.
 * `   freesolv/` - Hydration free energy of a subset of the FreeSolv database.
     * Molecules generated from SMILES strings (requires OpenEye Toolkits)
     * Multiple simulations configured at once from YANK's `!Combinatorial` feature.
+    
+# Current YAML Revision: 1.0
 
+The examples here on GitHub will be ahead of those released on `conda`. 
+This section tracks the highest YAML code revision in YANK that can be 
+used with these examples. 
+ 
+[YAML code revisions are backwards compatible](http://getyank.org/latest/yamlpages/version.html) 
+for a given major revision 
+(e.g. YAML Version 1.2 will accept scripts built for version 1.0)
