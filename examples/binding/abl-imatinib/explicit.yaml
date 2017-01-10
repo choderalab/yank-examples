@@ -2,13 +2,12 @@
 options:
   minimize: yes
   verbose: yes
-  output_dir: .
-  number_of_iterations: 500
+  output_dir: abl-explicit
+  number_of_extension_iterations: 50
   nsteps_per_iteration: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere
   timestep: 1.5*femtoseconds
-  output_dir: explicit
   resume_setup: yes
   resume_simulation: yes
 

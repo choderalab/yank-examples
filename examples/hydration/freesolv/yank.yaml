@@ -2,9 +2,12 @@
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 500
+  number_of_extension_iterations: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere
+  resume_setup: yes
+  resume_simulation: yes
+  platform: OpenCL
 
 # Configure the specific molecules we will use for our systems
 molecules:
@@ -15,12 +18,11 @@ molecules:
       charge_method: bcc
 
 solvents:
-  pme:
+  explicit:
     nonbonded_method: PME
     nonbonded_cutoff: 9*angstroms
     clearance: 16*angstroms
-  solvents:
-  GBSA:
+  implicit:
     nonbonded_method: NoCutoff
     implicit_solvent: OBC2
   vacuum:
@@ -29,7 +31,7 @@ solvents:
 systems:
   freesolv-hydration:
     solute: binders
-    solvent1: !Combinatorial [pme, GBSA]
+    solvent1: !Combinatorial [explicit, implicit]
     solvent2: vacuum
     leap:
       parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip3p]

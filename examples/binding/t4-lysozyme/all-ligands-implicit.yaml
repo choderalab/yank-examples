@@ -2,10 +2,13 @@
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 500
+  number_of_extension_iterations: 100
   temperature: 300*kelvin
   pressure: null
   output_dir: all-ligands-implicit-output
+  resume_setup: yes
+  resume_simulation: yes
+  platform: OpenCL
 
 # Configure the specific molecules we will use for our systems
 molecules:
@@ -23,7 +26,7 @@ molecules:
     # completely equivalent to "select: all". Here it is shown only to
     # illustrate the usage of the "!Combinatorial" keyword to extract
     # a subset of rows from the CSV file.
-    select: !Combinatorial [0,1,2,3]
+    select: all
 
 # Define the solvent for our system
 solvents:

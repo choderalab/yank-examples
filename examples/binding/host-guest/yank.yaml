@@ -2,10 +2,13 @@
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 500
+  number_of_extension_iterations: 400
   temperature: 300*kelvin
   pressure: 1*atmospheres
   output_dir: output # Does not have to be set, but we do here to show the different outputs
+  resume_setup: yes
+  resume_simulation: yes
+  platform: OpenCL
 
 # Configure the specific molecules we will use for our systems
 molecules:
