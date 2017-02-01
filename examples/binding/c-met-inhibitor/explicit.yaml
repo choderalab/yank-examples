@@ -1,0 +1,57 @@
+---
+options:
+  minimize: yes
+  verbose: yes
+  output_dir: .
+  number_of_iterations: 2000
+  nsteps_per_iteration: 500
+  temperature: 300*kelvin
+  pressure: 1*atmosphere
+  timestep: 1.5*femtoseconds
+  output_dir: explicit
+  resume_setup: yes
+  resume_simulation: yes
+
+molecules:
+  c-Met:
+    filepath: input/met_4r1v_fixer.pdb
+  comp22:
+    filepath: input/Smet_4r1v_lig.mol2
+    antechamber:
+      charge_method: null
+
+solvents:
+  pme:
+    nonbonded_method: PME
+    switch_distance: 9*angstroms
+    nonbonded_cutoff: 10*angstroms
+    ewald_error_tolerance: 1.0e-5
+    clearance: 9*angstroms
+    positive_ion: Na+
+    negative_ion: Cl-
+
+systems:
+  c-Met-Inhib:
+    receptor: c-Met
+    ligand: comp22
+    solvent: pme
+    leap:
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip3p]
+
+protocols:
+  absolute-binding:
+    complex:
+      alchemical_path:
+        lambda_restraints:     [0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.50, 0.75, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.000, 1.00, 1.000, 1.00, 1.00]
+        lambda_electrostatics: [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.000, 0.00, 0.000, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.075, 0.05, 0.025, 0.01, 0.00]
+    solvent:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.00]
+
+experiments:
+  system: c-Met-Inhib
+  protocol: absolute-binding
+  restraint:
+    type: Boresch
