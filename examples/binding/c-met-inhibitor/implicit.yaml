@@ -16,7 +16,7 @@ molecules:
   c-Met:
     filepath: input/met_4r1v_fixer_noh2o.pdb
   comp22:
-    filepath: input/Smet_4r1v_lig.mol2
+    filepath: input/met_4r1v_lig.mol2
     antechamber:
       charge_method: null
 
