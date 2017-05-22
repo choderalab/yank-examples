@@ -3,7 +3,7 @@
 ## Description
 
 In this example, we compute the absolute binding free energy of the an inhibitor to c-Met Kinase. 
-These structures were kindly provided by the Merck Serono Research & Development and Merck KGaA group and uploaded with 
+These structures were kindly provided by the Merck Serono Research and Development and Merck KGaA group and uploaded with 
 permission.
  
 Please see the [their paper](http://www.sciencedirect.com/science/article/pii/S0960894X15000955) for more detail
