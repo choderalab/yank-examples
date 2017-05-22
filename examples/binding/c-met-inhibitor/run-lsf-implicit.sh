@@ -1,38 +1,22 @@
 #!/bin/bash
-#  Batch script for mpirun job on cbio cluster.
+# Maximum wall clock time (hh:mm)
+#BSUB -W 72:00
 #
+# Output log
+#BSUB -o c-Met-imp.%J.log
 #
-# walltime : maximum wall clock time (hh:mm:ss)
-#PBS -l walltime=72:00:00
+# Request 8 cores and 8 GPUs packed onto 2 nodes
+# Note: MSKCC's LSF Cluster is configured so ngpus_excl_p behaves different from default
+#BSUB -n 8 -R "rusage[ngpus_excl_p=1] span[ptile=4]"
 #
-# join stdout and stderr
-#PBS -j oe
+# Submit to the queue which flips GPUs into shared mode from exclusive mode (MSKCC configuration)
+#BSUB -q gpushared
 #
-# spool output immediately
-#PBS -k oe
-#
-# specify queue
-#PBS -q gpu
-#
-# nodes: number of nodes
-#   ppn: how many cores per node to use
-#PBS -l nodes=4:ppn=4:gpus=4:shared:gtx680
-#
-# export all my environment variables to the job
-##PBS -V
-#
-# job name (default = name of script file)
-#PBS -N abl-imatinib-implicit
-
-if [ -n "$PBS_O_WORKDIR" ]; then 
-    cd $PBS_O_WORKDIR
-fi
+# Job Name
+#BSUB -J cMet-imp
 
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
-export PREFIX="implicit"
-build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
-mpirun -configfile $PREFIX.configfile
+build_mpirun_configfile "yank script --yaml=implicit.yaml"
+mpiexec.hydra -f hostfile -configfile configfile
 date
-
-

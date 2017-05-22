@@ -22,7 +22,7 @@
 ##PBS -V
 #
 # job name (default = name of script file)
-#PBS -N abl-imatinib-explicit
+#PBS -N c-Met-explicit
 
 if [ -n "$PBS_O_WORKDIR" ]; then 
     cd $PBS_O_WORKDIR
@@ -36,7 +36,7 @@ nvcc --version
 echo "Running simulation via MPI..."
 export PREFIX="explicit"
 build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
-mpirun -configfile $PREFIX.configfile
+mpirun -f hostfile -configfile $PREFIX.configfile
 date
 
 
