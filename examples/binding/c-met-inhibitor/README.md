@@ -3,7 +3,8 @@
 ## Description
 
 In this example, we compute the absolute binding free energy of the an inhibitor to c-Met Kinase. 
-These structures were kindly provided by the Merck Serono Research & Development and Merck KGaA group.
+These structures were kindly provided by the Merck Serono Research & Development and Merck KGaA group and uploaded with 
+permission.
  
 Please see the [their paper](http://www.sciencedirect.com/science/article/pii/S0960894X15000955) for more detail
 
@@ -23,11 +24,6 @@ T          : 300.00
 ionC       : 0.10
 pH = 10.00
  
- KEEP WORKING BELOW HERE
-
-three dominant protonation states of imatinib in solvent at pH 7.4 to Abl kinase.
-Note that these free energies are not combined into an overall free energy of binding; this simply illustrates the sensitivity of the binding free energy to choice of ligand protonation state.
-
 ## Running the example
 
 ### Explicit solvent
@@ -41,19 +37,27 @@ yank script --yaml=explicit.yaml
 
 To run the simulation in implicit solvent (OBC GBSA):
 ```bash
-yank script --yaml=explicit.yaml
+yank script --yaml=implicit.yaml
 ```
 
 ### Cleaning up
 To clean up and delete all simulation files:
-```
+```bash
 yank cleanup --store=output
 ```
 
 ## Manifest
 * `explicit.yaml` - YANK YAML input file for explicit solvent free energy calculation
-* `explicit.yaml` - YANK YAML input file for implicit solvent free energy calculation
-* `run.sh` - bash script for running explicit solvent calculation
-* `run-torque.sh` - example Torque batch queue script for running explicit solvent calculation in parallel over multiple GPUs
+* `implicit.yaml` - YANK YAML input file for implicit solvent free energy calculation
+* `run-explicit.sh` - bash script for running explicit solvent calculation
+* `run-torque-explicit.sh` - example Torque batch queue script for running explicit solvent calculation in parallel over multiple GPUs
+* `run-torque-implicit.sh` - example Torque batch queue script for running implicit solvent calculation in parallel over multiple GPUs
+* `run-lsf-implicit.sh` - example LSF batch queue script for running explicit solvent calculation in parallel over multiple GPUs
+* `run-lsf-explicit.sh` - example LSF batch queue script for running explicit solvent calculation in parallel over multiple GPUs
 * `input/` - initial protein and ligand structure files
+
+### Notes on the cluster scripts
+The Torque and LSF scripts have been modified to work on the High Performance Computing clusters at Memorial 
+Sloan-Kettering Cancer Center. The Slrum scripts have been modified to run on the Merck KGaA GPU cluster. 
+You may need to make small changes to the respective `#PBS`, `#BSUB`, or `#SBATCH` directives to work on your cluster.
 
