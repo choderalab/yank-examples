@@ -2,8 +2,7 @@
 options:
   minimize: yes
   verbose: yes
-  output_dir: .
-  number_of_iterations: 2000
+  number_of_iterations: 4000
   nsteps_per_iteration: 500
   temperature: 300*kelvin
   pressure: null
@@ -33,7 +32,7 @@ systems:
     ligand: comp22
     solvent: GBSA
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip4pew]
 
 protocols:
   absolute-binding:

@@ -2,8 +2,7 @@
 options:
   minimize: yes
   verbose: yes
-  output_dir: .
-  number_of_iterations: 2000
+  number_of_iterations: 5000
   nsteps_per_iteration: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere
@@ -36,7 +35,7 @@ systems:
     ligand: comp22
     solvent: pme
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip4pew]
 
 protocols:
   absolute-binding:
