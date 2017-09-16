@@ -31,8 +31,8 @@ fi
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
 export PREFIX="implicit"
-build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
-mpirun -configfile $PREFIX.configfile
+build_mpirun_configfile --hosfilepath $PREFIX.hostfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
+mpirun -f $PREFIX.hostfile -configfile $PREFIX.configfile
 date
 
 
