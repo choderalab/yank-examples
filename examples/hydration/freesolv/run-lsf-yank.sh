@@ -12,7 +12,6 @@
 #BSUB -m ls-gpu
 #
 # nodes: number of nodes and GPU request
-# 8 CPU and GPU over 2 nodes
 #BSUB -n 4 -R "rusage[ngpus_excl_p=1,mem=8]"
 #
 # Start MPS since Cbio GPUs are in exclusive mode
