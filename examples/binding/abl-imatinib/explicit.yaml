@@ -2,7 +2,6 @@
 options:
   minimize: yes
   verbose: yes
-  output_dir: .
   number_of_iterations: 500
   nsteps_per_iteration: 500
   temperature: 300*kelvin
@@ -43,7 +42,7 @@ systems:
     ligand: STI
     solvent: pme
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip4pew]
 
 protocols:
   absolute-binding:
