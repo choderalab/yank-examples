@@ -16,7 +16,7 @@ Detailed guides are available to guide you through these examples through
 
 ## Requirements
 
-* YANK >= 0.14.1
+* YANK >= 0.17.0
 * AmberMini >= 16.16.0
 
 ## Installing through `conda`
@@ -25,7 +25,7 @@ We make this repository through the `omnia` conda channel for easy
 install. The files will be put in `{Python Source Dir}/share/yank/examples`
 
 ```bash
-conda install -c omnia yank-examples
+conda install -c conda-forge -c omnia yank-examples
 ```
 
 ## Installing from "source"
@@ -50,7 +50,7 @@ All example files are in the `examples` folder.
     * Molecules generated from SMILES strings (requires OpenEye Toolkits)
     * Multiple simulations configured at once from YANK's `!Combinatorial` feature.
     
-# Current YAML Revision: 1.0
+# Current YAML Revision: 1.2
 
 The examples here on GitHub will be ahead of those released on `conda`. 
 This section tracks the highest YAML code revision in YANK that can be 

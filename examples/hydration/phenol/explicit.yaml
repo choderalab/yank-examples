@@ -1,8 +1,7 @@
----
 options:
   minimize: yes
   verbose: yes
-  output_dir: .
+  output_dir: explicit
   number_of_iterations: 1000
   temperature: 300*kelvin
   pressure: 1*atmosphere
@@ -27,7 +26,7 @@ systems:
     solvent1: water
     solvent2: vacuum
     leap:
-      parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip3p]
+      parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip4pew]
 
 protocols:
   hydration-protocol:

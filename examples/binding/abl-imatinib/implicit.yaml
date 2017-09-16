@@ -2,12 +2,11 @@
 options:
   minimize: yes
   verbose: yes
-  output_dir: .
-  number_of_iterations: 250
-  nsteps_per_iteration: 2500
+  number_of_iterations: 3000
+  nsteps_per_iteration: 500
   temperature: 300*kelvin
   timestep: 2.0*femtoseconds
-  platform: OpenCL
+  platform: CUDA
   output_dir: implicit
   resume_setup: yes
   resume_simulation: yes
@@ -38,7 +37,7 @@ systems:
     ligand: STI
     solvent: GBSA
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip4pew]
 
 protocols:
   absolute-binding:

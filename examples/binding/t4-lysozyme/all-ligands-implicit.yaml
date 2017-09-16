@@ -37,7 +37,7 @@ systems:
     ligand: binders
     solvent: GBSA
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip4pew]
     pack: yes
 
 protocols:

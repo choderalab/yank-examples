@@ -4,7 +4,7 @@
 
 There are several tutorials contained in this folder.
 
-For the introductory p-xylene binding in TIP3P water tutorial, please see: 
+For the introductory p-xylene binding in TIP4P-EW water tutorial, please see: 
 [our introduction tutorial on the YANK website](http://getyank.org/latest/examples/p-xylene-explicit.html)
 
 For the example where we bind all binders with SMILES string, please see:
@@ -30,6 +30,8 @@ to process the SMILES strings and makes use of the `!Combinatorial` argument.
 * `run-all-ligands-implicit.sh` - Run the all-ligands binding example in implicit solvent.
 * `run-torque-all-ligands-explicit.sh` - Run the all-ligands binding example in explicit water on a torque cluster. May require tweaking for your cluster.
 * `run-torque-all-ligands-implicit.sh` - Run the all-ligands binding example in implicit solvent on a torque cluster. May require tweaking for your cluster.
+* `run-lsf-all-ligands-explicit.sh` - Run the all-ligands binding example in explicit water on a LSF cluster. May require tweaking for your cluster.
+* `run-lsf-all-ligands-implicit.sh` - Run the all-ligands binding example in implicit solvent on a LSF cluster. May require tweaking for your cluster.
 * `input/L99A-binders.csv` - CSV file containing SMILES representation of few known binders for T4 Lysozyme.
 
 ### Other Files

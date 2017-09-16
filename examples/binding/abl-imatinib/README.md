@@ -9,7 +9,7 @@ Note that these free energies are not combined into an overall free energy of bi
 
 ### Explicit solvent
 
-To run the simulation in explicit solvent (TIP3P):
+To run the simulation in explicit solvent (TIP4P-EW):
 ```bash
 yank script --yaml=explicit.yaml
 ```
@@ -18,7 +18,7 @@ yank script --yaml=explicit.yaml
 
 To run the simulation in implicit solvent (OBC GBSA):
 ```bash
-yank script --yaml=explicit.yaml
+yank script --yaml=implicit.yaml
 ```
 
 ### Cleaning up
@@ -29,8 +29,12 @@ yank cleanup --store=output
 
 ## Manifest
 * `explicit.yaml` - YANK YAML input file for explicit solvent free energy calculation
-* `explicit.yaml` - YANK YAML input file for implicit solvent free energy calculation
-* `run.sh` - bash script for running explicit solvent calculation
-* `run-torque.sh` - example Torque batch queue script for running explicit solvent calculation in parallel over multiple GPUs
+* `implici.yaml` - YANK YAML input file for implicit solvent free energy calculation
+* `run-explicit.sh` - bash script for running explicit solvent calculation
+* `run-implicit.sh` - bash script for running implicit solvent calculation
+* `run-torque-explicit.sh` - example Torque batch queue script for running explicit solvent calculation in parallel over multiple GPUs
+* `run-torque-implicit.sh` - example Torque batch queue script for running implicit solvent calculation in parallel over multiple GPUs
+* `run-lsf-explicit.sh` - example LSF batch queue script for running explicit solvent calculation in parallel over multiple GPUs
+* `run-lsf-implicit.sh` - example LSF batch queue script for running implicit solvent calculation in parallel over multiple GPUs
 * `input/` - initial protein and ligand structure files
 

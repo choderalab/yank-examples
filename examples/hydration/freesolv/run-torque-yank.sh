@@ -22,7 +22,7 @@
 ##PBS -V
 #
 # job name (default = name of script file)
-#PBS -N p-xylene-explicit
+#PBS -N freesolv-mini
 
 if [ -n "$PBS_O_WORKDIR" ]; then 
     cd $PBS_O_WORKDIR
@@ -31,6 +31,6 @@ fi
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
 build_mpirun_configfile "yank script --yaml=yank.yaml"
-mpiexec.hydra -configfile configfile
+mpiexec.hydra -f hostfile -configfile configfile
 date
 
