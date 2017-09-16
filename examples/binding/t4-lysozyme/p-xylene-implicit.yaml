@@ -36,7 +36,7 @@ systems:
     ligand: p-xylene
     solvent: GBSA
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip4pew]
 
 # The protocols define the alchemical path each phase will take, we use the same lambda values, though they could be different
 protocols:

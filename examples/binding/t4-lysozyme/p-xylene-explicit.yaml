@@ -5,7 +5,7 @@ options:
   number_of_iterations: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere # To run with NVT ensemble, set this option to "null". Defaults to 1 atm if excluded
-  platform: OpenCL
+  platform: CUDA
   output_dir: p-xylene-explicit-output
 
 # Configure the specific molecules we will use for our systems
@@ -43,7 +43,7 @@ systems:
     ligand: p-xylene
     solvent: pme
     leap:
-      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip4pew]
 
 # The protocols define the alchemical path each phase will take, we use the same lambda values, though they could be different
 protocols:
