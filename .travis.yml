@@ -19,8 +19,6 @@ branches:
 install:
   - source devtools/travis-ci/install.sh
   - export PYTHONUNBUFFERED=true
-  - conda config --add channels ${ORGNAME}
-  - conda config --add channels conda-forge  
 
 script:
   # Create a test environment
