@@ -5,7 +5,7 @@
 #
 
 # Run YANK
-yank script --yaml=yank.ymal
+yank script --yaml=yank.yaml
 
 # Analyze the data
 echo "Analyzing data..."
