@@ -11,11 +11,9 @@
 # Specify node group
 #BSUB -m ls-gpu
 #
-# nodes: number of nodes and GPU request
-#BSUB -n 4 -R "rusage[ngpus_excl_p=1,mem=8]"
-#
-# Start MPS since Cbio GPUs are in exclusive mode
-#BSUB -env "all, LSB_START_JOB_MPS=Y"
+# 4 CPU and 4 GPU on 1 node
+#BSUB -n 4 -R "rusage[mem=8] span[ptile=4]"
+#BSUB -gpu "num=1:j_exclusive=yes:mode=shared"
 #
 # job name (default = name of script file)
 #BSUB -J "t4-all-ligands-explicit"
@@ -24,7 +22,7 @@
 # Run the simulation with verbose output:
 echo "Running simulation via MPI..."
 export PREFIX="all-ligands-explicit"
-build_mpirun_configfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
-mpiexec.hydra -configfile $PREFIX.configfile
+build_mpirun_configfile --hostfilepath $PREFIX.hostfile --configfilepath $PREFIX.configfile "yank script --yaml=$PREFIX.yaml"
+mpiexec.hydra -f $PREFIX.hostfile -configfile $PREFIX.configfile
 date
 
