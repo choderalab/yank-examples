@@ -13,10 +13,8 @@
 #
 # nodes: number of nodes and GPU request
 # 8 CPU and GPU over 2 nodes
-#BSUB -n 8 -R "rusage[ngpus_excl_p=1,mem=8] span[ptile=4]"
-#
-# Start MPS since Cbio GPUs are in exclusive mode
-#BSUB -env "all, LSB_START_JOB_MPS=Y"
+#BSUB -n 8 -R "rusage[mem=8] span[ptile=4]"
+#BSUB -gpu "num=1:j_exclusive=yes:mode=shared"
 #
 # job name (default = name of script file)
 #BSUB -J " abl-imatinib-explicit"

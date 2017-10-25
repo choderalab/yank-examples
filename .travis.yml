@@ -16,11 +16,17 @@ branches:
   only:
     - master
 
+before_install:
+  # Configure environment.
+  - source devtools/travis-ci/install.sh
+  - export PYTHONUNBUFFERED=true
+  # Unpack encrypted OpenEye license file
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == true ] ; then openssl aes-256-cbc -K $encrypted_26d6bc703718_key -iv $encrypted_26d6bc703718_iv -in devtools/travis-ci/oe_license.txt.enc -out $HOME/oe_license.txt -d; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == false ] ; then echo "OpenEye license will not be installed in pull request."; fi
+
 install:
   - source devtools/travis-ci/install.sh
   - export PYTHONUNBUFFERED=true
-  - conda config --add channels ${ORGNAME}
-  - conda config --add channels conda-forge  
 
 script:
   # Create a test environment
@@ -34,6 +40,8 @@ script:
   - conda install --yes --use-local ${PACKAGENAME}
   # Install testing dependencies
   - conda install --yes --quiet nose nose-timer
+  # Install OpenEye dependencies
+  - pip install -i https://pypi.anaconda.org/OpenEye/simple OpenEye-toolkits && python -c "import openeye; print(openeye.__version__)"
   # Set the environment variables to only do setup
   - export YANK_MINIMIZE=no YANK_NUMBER_OF_ITERATION=0 YANK_PLATFORM=fastest
   # Test the package

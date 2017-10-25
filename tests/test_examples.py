@@ -144,7 +144,7 @@ def test_t4_p_xylene_explicit():
     run_examples(example_dir, yaml_name)
 
 
-@attr('slow')
+#@attr('slow')
 def test_t4_p_xylene_implicit():
     """
     Test p-xylene binding to t4 lysozyme example in implicit solvent
@@ -166,7 +166,7 @@ def test_t4_all_ligands_explicit():
     run_examples(example_dir, yaml_name)
 
 
-@attr('slow')
+#@attr('slow')
 @skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_t4_all_ligands_implicit():
     """
@@ -198,7 +198,7 @@ def test_hydration_phenol_explicit():
     run_examples(example_dir, yaml_name)
 
 
-@attr('slow')
+#@attr('slow')
 @skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_binding_host_guest():
     """
@@ -209,7 +209,7 @@ def test_binding_host_guest():
     run_examples(example_dir, yaml_name)
 
 
-@attr('slow')
+#@attr('slow')
 @skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_hydration_freesolv():
     """
