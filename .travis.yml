@@ -34,8 +34,10 @@ script:
   - conda install --yes --use-local ${PACKAGENAME}
   # Install testing dependencies
   - conda install --yes --quiet nose nose-timer
+  # Set the environment variables to only do setup
+  - export YANK_MINIMIZE=no YANK_NUMBER_OF_ITERATION=0 YANK_PLATFORM=fastest
   # Test the package
-  - cd tests && nosetests . --nocapture --verbosity=2 --with-timer -a '!slow' && cd ..
+  - cd tests && nosetests . --nocapture --verbosity=2 --with-timer && cd ..
 
 env:
   matrix:

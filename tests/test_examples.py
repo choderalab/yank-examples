@@ -17,110 +17,78 @@ import os
 import shutil
 import subprocess
 import tempfile
-import re
 
 import openmoltools as omt
 
 from nose.plugins.attrib import attr
 from unittest import skipIf
+from distutils.util import strtobool
 
 import yank
 
-
-# =============================================================================================
-# OPEN EYE TESTS
-# =============================================================================================
-
-# Borrowing the test from the OpenMolTools set
-try:
-    oechem = omt.utils.import_("openeye.oechem")
-    if not oechem.OEChemIsLicensed(): raise(ImportError("Need License for OEChem!"))
-    oequacpac = omt.utils.import_("openeye.oequacpac")
-    if not oequacpac.OEQuacPacIsLicensed(): raise(ImportError("Need License for oequacpac!"))
-    oeiupac = omt.utils.import_("openeye.oeiupac")
-    if not oeiupac.OEIUPACIsLicensed(): raise(ImportError("Need License for OEOmega!"))
-    oeomega = omt.utils.import_("openeye.oeomega")
-    if not oeomega.OEOmegaIsLicensed(): raise(ImportError("Need License for OEOmega!"))
-    HAVE_OE = True
-    openeye_exception_message = str()
-except Exception as e:
-    HAVE_OE = False
-    openeye_exception_message = str(e)
+from .base_checks import HAVE_OE, openeye_exception_message
 
 
 # =============================================================================================
 # UTILITY FUNCTIONS
 # =============================================================================================
 
-
-def prepare_minimize(yaml_string):
+def add_overrides():
     """
-    Modify the YAML file string to figure out if we need to modify the YAML string
+    This function spits out the override flags based on environment variables, mainly for nose tests.
 
-    3 Cases:
-    1) minimize_max_iterations present: modify the number after to no
-    2) minimize_max_iterations absent but options present: add the line
-    3) options absent: add options, add minimize_max_iterations.
+    If the parameter is not set, then there is no overwrite and the default of the script is used
 
-    :param yaml_string: Raw string from a .yaml file used for YANK. === NO STRING MANIPULATION BEFORE FEEDING IN===
-    :return: parsed_yaml_string: Modified string with minimize_max_iterations = 1 parsed
+    The environment variables it searches for are the following:
+    YANK_MINIMIZE : bool-like
+        Choose to minimize the examples
+        Tries to parse the variable as a boolean, but if it cannot, this override is not set
+    YANK_NUMBER_OF_ITERATIONS : int-like
+        Choose how many iterations to run
+        Tries to parse the variable as an int, but if it cannot, this override is not set
+    YANK_PLATFORM : str
+        Choose the platform to run on, see the YANK docs for valid choices (case-sensitive)
+        Tries to parse variable as str, but if it cannot, no override is set.
     """
+    additional_commands = []
 
-    iteration_var = "minimize_max_iterations"
-    number_of_iterations = "1"
-    if iteration_var in yaml_string:  # Case 1
-        search_string = "minimize_max_iterations:\s*\d+"
-        replacement_string = "minimize_max_iterations: " + number_of_iterations
-    elif "options:" in yaml_string:  # Case 2
-        # Compute indentation level. May need to exclude \n from \s: [ \t\n\r\f\v]
-        number_of_spaces = len(re.search("(?:options:\s*\n+)(\s+)", yaml_string).group(1))
-        search_string = "options:\n"
-        replacement_string = search_string + ' ' * number_of_spaces + iteration_var + ': ' + number_of_iterations + '\n'
-    else:  # Case 3
-        # Use re.match here since we are looking from the start of the string
-        match = re.match("(?:\s*\S+\s*\n+)(\s+)", yaml_string)
-        if not match:  # Check for 0 length string
-            raise IOError("yaml_string does not appear to be in any expected format!")
-        number_of_spaces = len(match.group1(1))
-        search_string = "$"
-        replacement_string = "\n\noptions:\n" + ' ' * number_of_spaces + iteration_var + ': ' + number_of_iterations + '\n\n'
-    parsed_yaml_string = re.sub(search_string, replacement_string, yaml_string)
-    return parsed_yaml_string
+    # Setup minimizes
+    minimize = os.environ.get('YANK_MINIMIZE', None)
+    try:
+        minimize = strtobool(minimize)
+    except (AttributeError, ValueError):
+        minimize = None
+    if minimize is None:  # Check if none (could not parse)
+        pass
+    elif minimize:  # Check the boolean setting
+        additional_commands.append("-o options:minimize:yes")
+    else:
+        additional_commands.append("-o options:minimize:no")
 
+    # Production number of iterations
+    number_of_iterations = os.environ.get('YANK_NUMBER_OF_ITERATIONS', None)
+    try:
+        number_of_iterations = int(number_of_iterations)
+    except (TypeError, ValueError):
+        number_of_iterations = None
+    if number_of_iterations is None:  # Check if none (could not parse)
+        pass
+    else:
+        additional_commands.append("-o options:number_of_iterations:{}".format(number_of_iterations))
 
-def prepare_number_of_iterations(yaml_string):
-    """
-    Modify the YAML file string to figure out if we need to modify the YAML string
+    # Setup Platform
+    platform = os.environ.get('YANK_PLATFORM', None)
+    try:
+        assert platform in ['fastest', 'Reference', 'OpenCL', 'CUDA']
+    except AssertionError:
+        platform = None
+    if platform is None:  # Check if none (could not parse)
+        pass
+    else:
+        additional_commands.append("-o options:platform:{}".format(platform))
 
-    3 Cases:
-    1) number_of_iterations present: modify the number after to 1
-    2) number_of_iterations absent but options present: add the line
-    3) options absent: add options, add number_of_iterations.
-
-    :param yaml_string: Raw string from a .yaml file used for YANK. === NO STRING MANIPULATION BEFORE FEEDING IN===
-    :return: parsed_yaml_string: Modified string with number_of_iterations = 0 parsed
-    """
-
-    iteration_var = "number_of_iterations"
-    number_of_iterations = "1"
-    if iteration_var in yaml_string:  # Case 1
-        search_string = "number_of_iterations:\s*\d+"
-        replacement_string = "number_of_iterations: " + number_of_iterations
-    elif "options:" in yaml_string:  # Case 2
-        # Compute indentation level. May need to exclude \n from \s: [ \t\n\r\f\v]
-        number_of_spaces = len(re.search("(?:options:\s*\n+)(\s+)", yaml_string).group(1))
-        search_string = "options:\n"
-        replacement_string = search_string + ' ' * number_of_spaces + iteration_var + ': ' + number_of_iterations + '\n'
-    else:  # Case 3
-        # Use re.match here since we are looking from the start of the string
-        match = re.match("(?:\s*\S+\s*\n+)(\s+)", yaml_string)
-        if not match:  # Check for 0 length string
-            raise IOError("yaml_string does not appear to be in any expected format!")
-        number_of_spaces = len(match.group(1))
-        search_string = "$"
-        replacement_string = "\n\noptions:\n" + ' ' * number_of_spaces + iteration_var + ': ' + number_of_iterations + '\n\n'
-    parsed_yaml_string = re.sub(search_string, replacement_string, yaml_string)
-    return parsed_yaml_string
+    # Finalize and output the string
+    return " ".join(additional_commands)
 
 
 def run_examples(example_directory, yaml_name):
@@ -128,9 +96,14 @@ def run_examples(example_directory, yaml_name):
     Generalized function to run an example in a given source directory.
     Provide it with a target directory (to copy all files) and name of a yaml script to run
 
-    :param example_directory: Directory name/path in the $PYTHONSOURCE/share/yank/examples to copy over to temp folder
-    :param yaml_name: Name of the YAML script inside example_directory to tweak and run with the .yaml extension
-    :return: None
+    This script reads the environment variable to determine if the
+
+    Parameters
+    ----------
+    example_directory: str
+        Directory name/path in the $PYTHONSOURCE/share/yank/examples to copy over to temp folder
+    yaml_name: str
+        Name of the YAML script inside example_directory to and run with the .yaml extension
     """
     # Get Example Paths
     prefix = yank.__file__
@@ -146,18 +119,16 @@ def run_examples(example_directory, yaml_name):
         # Copy over all files
         shutil.copytree(full_example_directory_path, example_final_directory)
         with omt.utils.temporary_cd(example_final_directory):
-            # Get the yaml file going!
-            with open(yaml_name) as f:
-                raw_yaml = f.read()
-            processed_yaml = prepare_number_of_iterations(raw_yaml)
-            processed_yaml = prepare_minimize(processed_yaml)
-            with open(yaml_name, 'w') as f:
-                f.write(processed_yaml)
+            # Initialize script
+            command = "yank script "
+            # Add overrides based on environment
+            command += add_overrides()
+            # Finalize command
+            command += " --yaml={}".format(yaml_name)
             # Run the script!
-            command = "yank script --yaml={}".format(yaml_name)
             return_code = subprocess.call(command, shell=True)
             if return_code:
-                raise Exception('Example %s returned exit code %d' % (example_directory, return_code))
+                raise Exception('Example {} returned exit code {}'.format(example_directory, return_code))
     # Cleanup
     shutil.rmtree(temporary_directory)
     return
