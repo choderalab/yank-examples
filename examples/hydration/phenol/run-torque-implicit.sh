@@ -3,7 +3,7 @@
 #  Adjust your script as needed for your clusters!
 #
 # walltime : maximum wall clock time (hh:mm:ss)
-#PBS -l walltime=2:00:00
+#PBS -l walltime=6:00:00
 #
 # join stdout and stderr
 #PBS -j oe
