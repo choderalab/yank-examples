@@ -26,7 +26,30 @@ from distutils.util import strtobool
 
 import yank
 
-from .base_checks import HAVE_OE, openeye_exception_message
+
+# =============================================================================================
+# OPEN EYE TESTS
+# =============================================================================================
+
+# Borrowing the test from the OpenMolTools set
+try:
+    oechem = omt.utils.import_("openeye.oechem")
+    if not oechem.OEChemIsLicensed():
+        raise(ImportError("Need License for OEChem!"))
+    oequacpac = omt.utils.import_("openeye.oequacpac")
+    if not oequacpac.OEQuacPacIsLicensed():
+        raise(ImportError("Need License for oequacpac!"))
+    oeiupac = omt.utils.import_("openeye.oeiupac")
+    if not oeiupac.OEIUPACIsLicensed():
+        raise(ImportError("Need License for OEOmega!"))
+    oeomega = omt.utils.import_("openeye.oeomega")
+    if not oeomega.OEOmegaIsLicensed():
+        raise(ImportError("Need License for OEOmega!"))
+    HAVE_OE = True
+    openeye_exception_message = str()
+except Exception as e:
+    HAVE_OE = False
+    openeye_exception_message = str(e)
 
 
 # =============================================================================================
@@ -144,7 +167,7 @@ def test_t4_p_xylene_explicit():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
+@attr('slow')
 def test_t4_p_xylene_implicit():
     """
     Test p-xylene binding to t4 lysozyme example in implicit solvent
@@ -166,7 +189,7 @@ def test_t4_all_ligands_explicit():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
+@attr('slow')
 @skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_t4_all_ligands_implicit():
     """
@@ -198,7 +221,7 @@ def test_hydration_phenol_explicit():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
+@attr('slow')
 @skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_binding_host_guest():
     """
@@ -209,7 +232,7 @@ def test_binding_host_guest():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
+@attr('slow')
 @skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_hydration_freesolv():
     """
