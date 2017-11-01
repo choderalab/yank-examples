@@ -11,6 +11,9 @@
 # Specify node group
 #BSUB -m ls-gpu
 #
+# Specify the correct queue to use GPU's
+#BSUB -q gpuqueue
+#
 # 4 CPU and 4 GPU on 1 node
 #BSUB -n 4 -R "rusage[mem=8] span[ptile=4]"
 #BSUB -gpu "num=1:j_exclusive=yes:mode=shared"
