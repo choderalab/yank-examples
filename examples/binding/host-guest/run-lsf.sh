@@ -11,6 +11,9 @@
 # Specify node group
 #BSUB -m ls-gpu
 #
+# Specify the correct queue to use GPU's
+#BSUB -q gpuqueue
+#
 # nodes: number of nodes and GPU request
 # 8 CPU and GPU over 2 nodes
 #BSUB -n 8 -R "rusage[mem=8] span[ptile=4]"
