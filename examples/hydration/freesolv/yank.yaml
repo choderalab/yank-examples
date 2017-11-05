@@ -8,7 +8,7 @@ options:
 
 # Configure the specific molecules we will use for our systems
 molecules:
-  binders:
+  solutes:
     # .smiles files are treated the same as .cvs files
     filepath: freesolv-mini.smiles
     antechamber:
@@ -20,6 +20,7 @@ solvents:
     nonbonded_method: PME
     nonbonded_cutoff: 9*angstroms
     clearance: 16*angstroms
+    solvent_model: tip4pew
   GBSA:
     nonbonded_method: NoCutoff
     implicit_solvent: OBC2
@@ -28,7 +29,7 @@ solvents:
 
 systems:
   freesolv-hydration:
-    solute: binders
+    solute: solutes
     solvent1: !Combinatorial [pme, GBSA]
     solvent2: vacuum
     leap:
