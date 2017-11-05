@@ -8,7 +8,7 @@ options:
 
 # Configure the specific molecules we will use for our systems
 molecules:
-  binders:
+  solutes:
     # .smiles files are treated the same as .cvs files
     filepath: freesolv-mini.smiles
     antechamber:
