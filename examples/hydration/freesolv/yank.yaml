@@ -13,7 +13,7 @@ molecules:
     filepath: freesolv-mini.smiles
     antechamber:
       charge_method: bcc
-    select: all1
+    select: all
 
 solvents:
   pme:
