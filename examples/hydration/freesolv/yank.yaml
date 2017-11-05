@@ -20,6 +20,7 @@ solvents:
     nonbonded_method: PME
     nonbonded_cutoff: 9*angstroms
     clearance: 16*angstroms
+    solvent_model: tip4pew
   GBSA:
     nonbonded_method: NoCutoff
     implicit_solvent: OBC2
