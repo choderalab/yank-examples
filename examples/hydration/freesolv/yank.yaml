@@ -28,7 +28,7 @@ solvents:
 
 systems:
   freesolv-hydration:
-    solute: binders
+    solute: solutes
     solvent1: !Combinatorial [pme, GBSA]
     solvent2: vacuum
     leap:
