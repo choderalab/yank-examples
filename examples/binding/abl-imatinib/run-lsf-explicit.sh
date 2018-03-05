@@ -16,7 +16,7 @@
 #
 # nodes: number of nodes and GPU request
 # 8 CPU and GPU over 2 nodes
-#BSUB -n 8 -R "rusage[mem=8] span[ptile=4]"
+#BSUB -n 4 -R "rusage[mem=8] span[ptile=4]"
 #BSUB -gpu "num=1:j_exclusive=yes:mode=shared"
 #
 # job name (default = name of script file)
