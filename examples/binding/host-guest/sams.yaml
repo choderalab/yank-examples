@@ -1,11 +1,13 @@
-# Set the general options of our simulation
+---
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 500
   temperature: 300*kelvin
-  pressure: 1*atmospheres
-  output_dir: output # Does not have to be set, but we do here to show the different outputs
+  pressure: 1*atmosphere
+  output_dir: explicit
+  resume_setup: yes
+  resume_simulation: yes
+  hydrogen_mass: 2.0 * amu
 
 # Configure the specific molecules we will use for our systems
 molecules:
@@ -21,44 +23,40 @@ molecules:
     antechamber:
       charge_method: bcc
 
-# Define the solvent for our system, here we use GBSA Implicit Solvent and Particle Mesh Ewald electrostatics treatment for Explicit Sovlent
 solvents:
-  # We can title this solvent whatever we want. We just call it "GBSA" for easy remembering
-  GBSA:
-    nonbonded_method: NoCutoff # Main definition of the nonbonded method
-    implicit_solvent: OBC2 # Onufriev-Bashford-Case GBSA model, name is related to Implicit solvents in OpenMM
-  # Similarly, we can title this solvent whatever we want. We call it "pme" for ease and to be unique from the gbsa entry
-  pme:
-    nonbonded_method: PME
-    # Specifies the distance btween "long range" and "short range" forces for PME
-    nonbonded_cutoff: 12*angstroms
-    # Specify the distance at which the short range forces are smoothly brought to 0 so there is no discontinuity in the force
-    # By default, this is nonbonded_cutoff minus 1 (one) angstrom
-    switch_distance: 11*angstroms
-    ewald_error_tolerance: 1.0e-4
-    # Specify a volume as a radius away the edge of the molecules molecules (CB7 and B2)
-    # this volume will be packed with water, leaving a small cavity for the non-water molecules
-    # You should alway minimize if you have this option
-    clearance: 12*angstroms
-    # Add thise itons if we need to neutralize the system.
+  rf:
+    nonbonded_method: CutoffPeriodic
+    switch_distance: 7*angstroms
+    nonbonded_cutoff: 8*angstroms
+    clearance: 9*angstroms
     positive_ion: Na+
     negative_ion: Cl-
 
+mcmc_moves:
+    langevin:
+        type: LangevinSplittingDynamicsMove
+        timestep: 4.0*femtosecond
+        splitting: VRORV
+        n_steps: 2500
+
+samplers:
+    sams:
+        type: SAMSSampler
+        mcmc_moves: langevin
+        state_update_scheme: global-jump
+        gamma0: 10.0
+        flatness_threshold: 1.0
+        number_of_iterations: 10000
+        #online_analysis_minimum_iterations: 10
+        #online_analysis_interval: 10
+        #online_analysis_target_error: 0.2
+
 # Define the systems: What is the ligand, receptor, and solvent we put them in
 systems:
-  # System names are abitrary
-  implicit:
-    # These entries point at the previously defined molecules and solvents
-    receptor: CB7
-    ligand: B2
-    solvent: GBSA
-    leap:
-      parameters: leaprc.gaff2
-
   explicit:
     receptor: CB7
     ligand: B2
-    solvent: pme
+    solvent: rf
     leap:
       parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip4pew]
 
@@ -77,7 +75,8 @@ protocols:
 
 # Here we combine the system and the protocol to make an expirement
 experiments:
-  system: !Combinatorial [implicit, explicit]
+  sampler: sams
+  system: explicit
   protocol: absolute-binding
   restraint:
     # Note that there is no lambda_electrostatics set in the protocol above, that is because we want the guest to always stay near the host.
