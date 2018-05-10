@@ -4,10 +4,11 @@ options:
   verbose: yes
   temperature: 300*kelvin
   pressure: 1*atmosphere
-  output_dir: explicit
+  output_dir: sams-explicit
   resume_setup: yes
   resume_simulation: yes
-  hydrogen_mass: 2.0 * amu
+  hydrogen_mass: 3.0 * amu
+  checkpoint_interval: 50
 
 # Configure the specific molecules we will use for our systems
 molecules:
@@ -23,12 +24,26 @@ molecules:
     antechamber:
       charge_method: bcc
 
+# Define the solvent for our system, here we use GBSA Implicit Solvent and Particle Mesh Ewald electrostatics treatment for Explicit Sovlent
 solvents:
-  rf:
-    nonbonded_method: CutoffPeriodic
-    switch_distance: 7*angstroms
-    nonbonded_cutoff: 8*angstroms
-    clearance: 9*angstroms
+  # We can title this solvent whatever we want. We just call it "GBSA" for easy remembering
+  #GBSA:
+  #  nonbonded_method: NoCutoff # Main definition of the nonbonded method
+  #  implicit_solvent: OBC2 # Onufriev-Bashford-Case GBSA model, name is related to Implicit solvents in OpenMM
+  # Similarly, we can title this solvent whatever we want. We call it "pme" for ease and to be unique from the gbsa entry
+  pme:
+    nonbonded_method: PME
+    # Specifies the distance btween "long range" and "short range" forces for PME
+    nonbonded_cutoff: 12*angstroms
+    # Specify the distance at which the short range forces are smoothly brought to 0 so there is no discontinuity in the force
+    # By default, this is nonbonded_cutoff minus 1 (one) angstrom
+    switch_distance: 11*angstroms
+    ewald_error_tolerance: 1.0e-4
+    # Specify a volume as a radius away the edge of the molecules molecules (CB7 and B2)
+    # this volume will be packed with water, leaving a small cavity for the non-water molecules
+    # You should alway minimize if you have this option
+    clearance: 12*angstroms
+    # Add thise itons if we need to neutralize the system.
     positive_ion: Na+
     negative_ion: Cl-
 
@@ -36,7 +51,7 @@ mcmc_moves:
     langevin:
         type: LangevinSplittingDynamicsMove
         timestep: 4.0*femtosecond
-        splitting: VRORV
+        splitting: "V R O R V"
         n_steps: 2500
 
 samplers:
@@ -53,7 +68,7 @@ systems:
   explicit:
     receptor: CB7
     ligand: B2
-    solvent: rf
+    solvent: pme
     leap:
       parameters: [leaprc.protein.ff14SB, leaprc.gaff, leaprc.water.tip4pew]
 
