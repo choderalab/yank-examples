@@ -5,10 +5,12 @@ options:
   verbose: yes
   temperature: 300*kelvin
   pressure: 1*atmosphere
+  hydrogen_mass: 3*amu
+  checkpoint_interval: 50
 
 # Configure the specific molecules we will use for our systems
 molecules:
-  binders:
+  solutes:
     # .smiles files are treated the same as .cvs files
     filepath: freesolv-mini.smiles
     antechamber:
@@ -20,14 +22,6 @@ solvents:
     nonbonded_method: PME
     nonbonded_cutoff: 9*angstroms
     clearance: 16*angstroms
-  # DEBUG: Reaction-field is for debugging only
-  reaction-field:
-    nonbonded_method: CutoffPeriodic
-    switch_distance: 7*angstroms
-    nonbonded_cutoff: 9*angstroms
-    clearance: 10*angstroms
-    positive_ion: Na+
-    negative_ion: Cl-
   GBSA:
     nonbonded_method: NoCutoff
     implicit_solvent: OBC2
@@ -36,10 +30,8 @@ solvents:
 
 systems:
   freesolv-hydration:
-    solute: binders
-    #solvent1: !Combinatorial [pme, GBSA]
-    #solvent1: reaction-field # DEBUG only
-    solvent1: GBSA # DEBUG
+    solute: solutes
+    solvent1: !Combinatorial [pme, GBSA]
     solvent2: vacuum
     leap:
       parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip4pew]
@@ -47,9 +39,9 @@ systems:
 mcmc_moves:
     langevin:
         type: LangevinSplittingDynamicsMove
-        timestep: 2.0*femtosecond
+        timestep: 4.0*femtosecond
         splitting: VRORV
-        n_steps: 500 # TODO: Change this to 500 or 2500
+        n_steps: 2500
 
 samplers:
     sams:
@@ -63,15 +55,6 @@ samplers:
 
 protocols:
   hydration-protocol:
-    # solvent1:
-    #   alchemical_path:
-    #     lambda_electrostatics: [1.00, 0.75, 0.50, 0.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    #     lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
-    # solvent2:
-    #   alchemical_path:
-    #     lambda_electrostatics: [1.00, 0.75, 0.50, 0.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    #     lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00]
-
     solvent1:
       alchemical_path:
         lambda_electrostatics: [1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
