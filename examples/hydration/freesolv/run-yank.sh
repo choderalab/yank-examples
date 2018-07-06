@@ -6,7 +6,7 @@
 
 # Run the simulation
 echo "Running simulation..."
-yank script --yaml=yank.yaml
+yank script --yaml=sams.yaml
 
 # Analyze the data
 echo "Analyzing data..."

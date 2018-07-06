@@ -5,8 +5,8 @@
 #
 
 # Run YANK
-yank script --yaml=yank.yaml
+yank script --yaml=sams.yaml
 
 # Analyze the data
 echo "Analyzing data..."
-yank analyze --store=hgoutput
+yank analyze --store=sams-explicit

@@ -1,0 +1,71 @@
+---
+# Set the general options of our simulation
+options:
+  minimize: yes
+  verbose: yes
+  temperature: 300*kelvin
+  pressure: 1*atmosphere
+  hydrogen_mass: 3*amu
+  checkpoint_interval: 50
+
+# Configure the specific molecules we will use for our systems
+molecules:
+  solutes:
+    # .smiles files are treated the same as .cvs files
+    filepath: freesolv-mini.smiles
+    antechamber:
+      charge_method: bcc
+    select: all
+
+solvents:
+  pme:
+    nonbonded_method: PME
+    nonbonded_cutoff: 9*angstroms
+    clearance: 16*angstroms
+  GBSA:
+    nonbonded_method: NoCutoff
+    implicit_solvent: OBC2
+  vacuum:
+    nonbonded_method: NoCutoff
+
+systems:
+  freesolv-hydration:
+    solute: solutes
+    solvent1: !Combinatorial [pme, GBSA]
+    solvent2: vacuum
+    leap:
+      parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip4pew]
+
+mcmc_moves:
+    langevin:
+        type: LangevinSplittingDynamicsMove
+        timestep: 4.0*femtosecond
+        splitting: VRORV
+        n_steps: 2500
+
+samplers:
+    sams:
+        type: SAMSSampler
+        mcmc_moves: langevin
+        state_update_scheme: global-jump
+        gamma0: 10.0
+        flatness_threshold: 1.0
+        number_of_iterations: 5000
+        locality: 10
+
+protocols:
+  hydration-protocol:
+    solvent1:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.04, 0.03, 0.02, 0.01, 0.00]
+    solvent2:
+      alchemical_path:
+        lambda_electrostatics: [1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+        lambda_sterics:        [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.04, 0.03, 0.02, 0.01, 0.00]
+
+# Here we combine the system and the protocol to make an expirement
+experiments:
+  system: freesolv-hydration
+  sampler: sams
+  protocol: hydration-protocol

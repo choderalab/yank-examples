@@ -36,7 +36,7 @@ solvents:
     # By default, this is nonbonded_cutoff minus 1 (one) angstrom
     switch_distance: 11*angstroms
     ewald_error_tolerance: 1.0e-4
-    # Specify a volume as a radius away the edge of the molecules molecules (CB7 and B2) 
+    # Specify a volume as a radius away the edge of the molecules molecules (CB7 and B2)
     # this volume will be packed with water, leaving a small cavity for the non-water molecules
     # You should alway minimize if you have this option
     clearance: 12*angstroms
