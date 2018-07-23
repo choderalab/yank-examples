@@ -42,8 +42,10 @@ script:
   - conda install --yes --quiet nose nose-timer
   # Install OpenEye dependencies
   - pip install -i https://pypi.anaconda.org/OpenEye/simple OpenEye-toolkits && python -c "import openeye; print(openeye.__version__)"
+  # Set the environment variables to only do setup
+  - export YANK_MINIMIZE=no YANK_NUMBER_OF_ITERATION=0 YANK_PLATFORM=fastest
   # Test the package
-  - cd tests && nosetests . --nocapture --verbosity=2 --with-timer -a '!slow' && cd ..
+  - cd tests && nosetests . --nocapture --verbosity=2 --with-timer && cd ..
 
 env:
   matrix:
