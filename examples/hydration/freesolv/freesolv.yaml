@@ -22,6 +22,7 @@ molecules:
     antechamber:
       charge_method: bcc
     select: all
+    #select: !Combinatorial [0, 1, 2, 3, 4]
 
 solvents:
   pme:
@@ -33,18 +34,10 @@ solvents:
     nonbonded_method: NoCutoff
 
 systems:
-  tip3p:
-    solute: freesolv
-    solvent1: pme
-    solvent2: vacuum
-    solvent_model: tip3p
-    leap:
-      parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip3p]
   tip4pew:
     solute: freesolv
     solvent1: pme
     solvent2: vacuum
-    solvent_model: tip4pew
     leap:
       parameters: [leaprc.gaff, leaprc.protein.ff14SB, leaprc.water.tip4pew]
 
@@ -89,6 +82,6 @@ protocols:
 
 # Here we combine the system and the protocol to make an expirement
 experiments:
-  system: !Combinatorial [tip3p, tip4pew]
+  system: tip4pew
   sampler: sams
-  protocol: sparse-protocol
+  protocol: !Combinatorial [sparse-protocol, dense-protocol]
