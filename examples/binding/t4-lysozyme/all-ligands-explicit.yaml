@@ -2,7 +2,7 @@
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 500
+  default_number_of_iterations: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere
   output_dir: all-ligands-explicit-output

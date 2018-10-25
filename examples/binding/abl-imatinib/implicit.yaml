@@ -3,7 +3,7 @@ options:
   minimize: yes
   verbose: yes
   output_dir: .
-  number_of_iterations: 250
+  default_number_of_iterations: 250
   nsteps_per_iteration: 2500
   temperature: 300*kelvin
   timestep: 2.0*femtoseconds
