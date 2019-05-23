@@ -21,7 +21,9 @@ import yaml
 import openmoltools as omt
 from yank.experiment import ExperimentBuilder, YankLoader
 
+
 EXAMPLES = Path(__file__).parent.parent / 'examples'
+
 
 @pytest.mark.parametrize("path", [
     'hydration/phenol/explicit.yaml',
@@ -40,9 +42,10 @@ def test_yaml_syntax(path):
     Test syntax only. If successful, `ExperimentBuilder`
     will be able to initialize safely.
     """
-    path = str(EXAMPLES / path)
+    path = EXAMPLES / path
     with omt.utils.temporary_cd(str(path.parent)):
-        builder = ExperimentBuilder(script=path)
+        builder = ExperimentBuilder(script=str(path))
+
 
 @pytest.mark.parametrize("path", [
     'binding/t4-lysozyme/p-xylene-explicit.yaml',
@@ -54,9 +57,9 @@ def test_yaml_syntax_cuda(path):
     to avoid errors unrelated to syntax if the test machine
     does not have CUDA enabled
     """
-    path = str(EXAMPLES / path)
+    path = EXAMPLES / path
     with omt.utils.temporary_cd(str(path.parent)):
-        with open(path) as f:
+        with open(str(path)) as f:
             data = yaml.load(f, Loader=YankLoader)
         del data['options']['platform']
         builder = ExperimentBuilder(script=data)
