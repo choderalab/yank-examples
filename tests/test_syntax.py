@@ -41,7 +41,7 @@ def test_yaml_syntax(path):
     will be able to initialize safely.
     """
     path = EXAMPLES / path
-    with omt.utils.temporary_cd(os.path.dirname(path)):
+    with omt.utils.temporary_cd(path.parent):
         builder = ExperimentBuilder(script=path)
 
 @pytest.mark.parametrize("path", [
@@ -55,7 +55,7 @@ def test_yaml_syntax_cuda(path):
     does not have CUDA enabled
     """
     path = EXAMPLES / path
-    with omt.utils.temporary_cd(os.path.dirname(path)):
+    with omt.utils.temporary_cd(path.parent):
         with open(path) as f:
             data = yaml.load(f, Loader=YankLoader)
         del data['options']['platform']
