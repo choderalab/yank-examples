@@ -40,7 +40,7 @@ def test_yaml_syntax(path):
     Test syntax only. If successful, `ExperimentBuilder`
     will be able to initialize safely.
     """
-    path = os.path.join(EXAMPLES, path)
+    path = EXAMPLES / path
     with omt.utils.temporary_cd(os.path.dirname(path)):
         builder = ExperimentBuilder(script=path)
 
