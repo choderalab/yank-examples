@@ -40,8 +40,8 @@ def test_yaml_syntax(path):
     Test syntax only. If successful, `ExperimentBuilder`
     will be able to initialize safely.
     """
-    path = EXAMPLES / path
-    with omt.utils.temporary_cd(path.parent):
+    path = str(EXAMPLES / path)
+    with omt.utils.temporary_cd(str(path.parent)):
         builder = ExperimentBuilder(script=path)
 
 @pytest.mark.parametrize("path", [
@@ -54,8 +54,8 @@ def test_yaml_syntax_cuda(path):
     to avoid errors unrelated to syntax if the test machine
     does not have CUDA enabled
     """
-    path = EXAMPLES / path
-    with omt.utils.temporary_cd(path.parent):
+    path = str(EXAMPLES / path)
+    with omt.utils.temporary_cd(str(path.parent)):
         with open(path) as f:
             data = yaml.load(f, Loader=YankLoader)
         del data['options']['platform']
