@@ -54,7 +54,7 @@ def test_yaml_syntax_cuda(path):
     to avoid errors unrelated to syntax if the test machine
     does not have CUDA enabled
     """
-    path = os.path.join(EXAMPLES, path)
+    path = EXAMPLES / path
     with omt.utils.temporary_cd(os.path.dirname(path)):
         with open(path) as f:
             data = yaml.load(f, Loader=YankLoader)
