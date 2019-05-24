@@ -56,5 +56,4 @@ experiments:
   protocol: absolute-binding
   restraint:
     type: Boresch
-    rigidify: 15*degrees
 
