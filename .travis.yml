@@ -43,8 +43,10 @@ script:
   # Install OpenEye dependencies
   - pip install -i https://pypi.anaconda.org/OpenEye/simple OpenEye-toolkits && python -c "import openeye; print(openeye.__version__)"
   # Test the package
-  - cd tests && pytest test_syntax.py; cd ..
-  - cd tests && nosetests . --nocapture --verbosity=2 --with-timer -a '!slow' && cd ..
+  - cd tests
+  - pytest test_syntax.py
+  - nosetests . --nocapture --verbosity=2 --with-timer -a '!slow'
+  - cd ..
 
 env:
   matrix:
