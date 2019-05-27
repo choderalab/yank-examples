@@ -45,7 +45,7 @@ script:
   # Test the package
   - cd tests
   - pytest test_syntax.py
-  - nosetests . --nocapture --verbosity=2 --with-timer -a '!slow'
+  - nosetests --nocapture --verbosity=2 --with-timer -a '!slow' test_examples.py
   - cd ..
 
 env:
