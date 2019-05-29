@@ -21,8 +21,7 @@ import re
 
 import openmoltools as omt
 
-from nose.plugins.attrib import attr
-from unittest import skipIf
+import pytest
 
 import yank
 
@@ -163,7 +162,7 @@ def run_examples(example_directory, yaml_name):
     return
 
 
-@attr('slow')
+@pytest.mark.slow
 def test_t4_p_xylene_explicit():
     """
     Test p-xylene binding to t4 lysozyme example in explicit solvent
@@ -173,7 +172,7 @@ def test_t4_p_xylene_explicit():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
+@pytest.mark.slow
 def test_t4_p_xylene_implicit():
     """
     Test p-xylene binding to t4 lysozyme example in implicit solvent
@@ -183,8 +182,8 @@ def test_t4_p_xylene_implicit():
     run_examples(example_dir, yaml_name)
 
 
-@attr('slow')
-@skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
+@pytest.mark.slow
+@pytest.mark.skipif(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_t4_all_ligands_explicit():
     """
     Test that the all-binders to t4 lysozyme example works in explicit solvent
@@ -195,8 +194,8 @@ def test_t4_all_ligands_explicit():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
-@skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
+@pytest.mark.slow
+@pytest.mark.skipif(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_t4_all_ligands_implicit():
     """
     Test that the all-binders to t4 lysozyme example works in implicit solvent
@@ -207,7 +206,7 @@ def test_t4_all_ligands_implicit():
     run_examples(example_dir, yaml_name)
 
 
-@attr('slow')
+@pytest.mark.slow
 def test_hydration_phenol_implicit():
     """
     Test that the phenol hydration implicit example
@@ -217,7 +216,7 @@ def test_hydration_phenol_implicit():
     run_examples(example_dir, yaml_name)
 
 
-@attr('slow')
+@pytest.mark.slow
 def test_hydration_phenol_explicit():
     """
     Test that the phenol hydration explicit example
@@ -227,8 +226,8 @@ def test_hydration_phenol_explicit():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
-@skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
+@pytest.mark.slow
+@pytest.mark.skipif(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_binding_host_guest():
     """
     Test the host guest binding example
@@ -238,8 +237,8 @@ def test_binding_host_guest():
     run_examples(example_dir, yaml_name)
 
 
-#@attr('slow')
-@skipIf(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
+@pytest.mark.slow
+@pytest.mark.skipif(not HAVE_OE, "Cannot test openeye module without OpenEye tools.\n" + openeye_exception_message)
 def test_hydration_freesolv():
     """
     Test that the hydration freesolv database example works

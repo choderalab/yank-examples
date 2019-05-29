@@ -30,18 +30,17 @@ install:
   # Activate the test environment
   - conda activate test
   # Build the recipe
-  - conda build devtools/conda-recipe
+  - conda build devtools/conda-recipe --no-test
   # Install the package
   - conda install --use-local ${PACKAGENAME}
   # Install testing dependencies
-  - conda install --quiet nose nose-timer pytest
+  - conda install --quiet pytest
   # Install OpenEye dependencies
   - pip install -i https://pypi.anaconda.org/OpenEye/simple OpenEye-toolkits && python -c "import openeye; print(openeye.__version__)"
+
+  script:
   # Test the package
-  - cd tests
-  - pytest test_syntax.py
-  - nosetests --nocapture --verbosity=2 --with-timer -a '!slow' test_examples.py
-  - cd ..
+  - pytest -m 'not slow'
 
 env:
   matrix:
