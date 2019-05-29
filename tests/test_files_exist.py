@@ -29,8 +29,7 @@ def _dirs_equal(comparer):
     - files with different names
     """
     yield all(not bool(x) for x in (comparer.diff_files, comparer.left_only, comparer.right_only))
-    for name, subdir in comparer.subdirs.items():
-        print(name)
+    for subdir in comparer.subdirs.values():
         yield from _dirs_equal(subdir)
 
 
