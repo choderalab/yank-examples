@@ -2,11 +2,11 @@
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 3000
-  nsteps_per_iteration: 500
+  default_number_of_iterations: 3000
+  default_nsteps_per_iteration: 500
   temperature: 300*kelvin
   pressure: 1*atmosphere
-  timestep: 2.0*femtoseconds
+  default_timestep: 2.0*femtoseconds
   output_dir: explicit
   resume_setup: yes
   resume_simulation: yes
@@ -56,5 +56,4 @@ experiments:
   protocol: absolute-binding
   restraint:
     type: Boresch
-    rigidify: 15*degrees
 

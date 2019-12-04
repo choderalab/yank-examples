@@ -2,10 +2,10 @@
 options:
   minimize: yes
   verbose: yes
-  number_of_iterations: 3000
-  nsteps_per_iteration: 500
+  default_number_of_iterations: 3000
+  default_nsteps_per_iteration: 500
   temperature: 300*kelvin
-  timestep: 2.0*femtoseconds
+  default_timestep: 2.0*femtoseconds
   platform: CUDA
   output_dir: implicit
   resume_setup: yes

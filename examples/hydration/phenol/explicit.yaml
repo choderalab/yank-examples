@@ -2,7 +2,7 @@ options:
   minimize: yes
   verbose: yes
   output_dir: explicit
-  number_of_iterations: 1000
+  default_number_of_iterations: 1000
   temperature: 300*kelvin
   pressure: 1*atmosphere
 

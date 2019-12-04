@@ -8,18 +8,10 @@ source:
 requirements:
   build:
     - yank >=0.17.0
-    - ambermini 16.16.0 6
 
   run:
     - yank >=0.17.0
-    - ambermini 16.16.0 6
 
-test:
-  requires:
-    - nose
-    - nose-timer
-  imports:
-    - yank
 
 about:
   home: https://github.com/choderalab/yank-examples

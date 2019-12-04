@@ -25,30 +25,27 @@ before_install:
   - if [ "$TRAVIS_SECURE_ENV_VARS" == false ] ; then echo "OpenEye license will not be installed in pull request."; fi
 
 install:
-  - source devtools/travis-ci/install.sh
-  - export PYTHONUNBUFFERED=true
-
-script:
   # Create a test environment
   - conda create --yes -n test python=$python
   # Activate the test environment
-  - source activate test
-  - conda install --yes --quiet pip
+  - conda activate test
   # Build the recipe
-  - conda build devtools/conda-recipe
+  - conda build devtools/conda-recipe --no-test
   # Install the package
-  - conda install --yes --use-local ${PACKAGENAME}
+  - conda install --use-local ${PACKAGENAME}
   # Install testing dependencies
-  - conda install --yes --quiet nose nose-timer
+  - conda install --quiet pytest
   # Install OpenEye dependencies
   - pip install -i https://pypi.anaconda.org/OpenEye/simple OpenEye-toolkits && python -c "import openeye; print(openeye.__version__)"
+
+  script:
   # Test the package
-  - cd tests && nosetests . --nocapture --verbosity=2 --with-timer -a '!slow' && cd ..
+  - pytest -m 'not slow'
 
 env:
   matrix:
-    - python=3.5  CONDA_PY=35
     - python=3.6  CONDA_PY=36
+    - python=3.7  CONDA_PY=37
 
   global:
     - ORGNAME="omnia"
