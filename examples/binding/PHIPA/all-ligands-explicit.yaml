@@ -16,8 +16,8 @@ molecules:
     pdbfixer:
       replace_nonstandard_residues: no
       remove_heterogens: all
-      add_missing_residues: yes
-      add_missing_atoms: yes
+      add_missing_residues: all
+      add_missing_atoms: all
   # Define our ligands
   site1-ligands:
     # This is actually a "CSV" file where the delimiter is a comma or a
@@ -66,7 +66,7 @@ molecules:
        tautomerize: no
     # Choose to simulate all molecules (1 at a time).
     # This is the default behavior but we specify it for this example
-    select: all
+    select: 0
   site4-ligands:
     # This is actually a "CSV" file where the delimiter is a comma or a
     # semicolon, and each row contains the SMILES representation of a molecule.
@@ -82,7 +82,7 @@ molecules:
        tautomerize: no
     # Choose to simulate all molecules (1 at a time).
     # This is the default behavior but we specify it for this example
-    select: all
+    select: 0
 
 # Define the solvent for our system
 solvents:
