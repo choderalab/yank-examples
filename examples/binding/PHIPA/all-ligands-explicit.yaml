@@ -1,0 +1,171 @@
+# Set the general options of our simulation
+options:
+  verbose: yes
+  default_number_of_iterations: 5000
+  temperature: 298.15*kelvin
+  pressure: 1*atmosphere
+  output_dir: output
+  processes_per_experiment: 1
+
+# Configure the specific molecules we will use for our systems
+molecules:
+  # Define our receptor, PHIPA, we can call it whatever we want so we just use its name here as the directive
+  PHIPA:
+    filepath: input/PHIPA_C2_Apo.pdb
+    strip_protons: yes
+    pdbfixer:
+      replace_nonstandard_residues: no
+      remove_heterogens: all
+      add_missing_residues: all
+      add_missing_atoms: all
+  # Define our ligands
+  site1-ligands:
+    # This is actually a "CSV" file where the delimiter is a comma or a
+    # semicolon, and each row contains the SMILES representation of a molecule.
+    filepath: input/site-1_fragment-hits.openeye.csv
+    antechamber:
+       charge_method: null
+    openeye:
+       quacpac: am1-bcc
+    epik:
+       select: 0
+       ph: 7.4
+       ph_tolerance: 3.0
+       tautomerize: no
+    # Choose to simulate all molecules (1 at a time).
+    # This is the default behavior but we specify it for this example
+    select: all
+  site2-ligands:
+    # This is actually a "CSV" file where the delimiter is a comma or a
+    # semicolon, and each row contains the SMILES representation of a molecule.
+    filepath: input/site-2_fragment-hits.openeye.csv
+    antechamber:
+       charge_method: null
+    openeye:
+       quacpac: am1-bcc
+    epik:
+       select: 0
+       ph: 7.4
+       ph_tolerance: 3.0
+       tautomerize: no
+    # Choose to simulate all molecules (1 at a time).
+    # This is the default behavior but we specify it for this example
+    select: all
+  site3-ligands:
+    # This is actually a "CSV" file where the delimiter is a comma or a
+    # semicolon, and each row contains the SMILES representation of a molecule.
+    filepath: input/site-3_fragment-hits.openeye.csv
+    antechamber:
+       charge_method: null
+    openeye:
+       quacpac: am1-bcc
+    epik:
+       select: 0
+       ph: 7.4
+       ph_tolerance: 3.0
+       tautomerize: no
+    # Choose to simulate all molecules (1 at a time).
+    # This is the default behavior but we specify it for this example
+    select: 0
+  site4-ligands:
+    # This is actually a "CSV" file where the delimiter is a comma or a
+    # semicolon, and each row contains the SMILES representation of a molecule.
+    filepath: input/site-4_fragment-hits.openeye.csv
+    antechamber:
+       charge_method: null
+    openeye:
+       quacpac: am1-bcc
+    epik:
+       select: 0
+       ph: 7.4
+       ph_tolerance: 3.0
+       tautomerize: no
+    # Choose to simulate all molecules (1 at a time).
+    # This is the default behavior but we specify it for this example
+    select: 0
+
+# Define the solvent for our system
+solvents:
+  pme:
+    nonbonded_method: PME
+    nonbonded_cutoff: 9*angstroms
+    clearance: 10*angstroms
+    ionic_strength: 150*millimolar
+    positive_ion: Na+
+    negative_ion: Cl-
+    solvent_model: tip3p
+
+systems:
+  PHIPA-site1-complex:
+    receptor: PHIPA
+    ligand: site1-ligands
+    solvent: pme
+    leap:
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+    # When ligands are generated from SMILES they have a random position.
+    # Setting "pack: yes" pulls the ligand close to the receptor ensuring
+    # that your solvation box won't be too big.
+    pack: yes
+  PHIPA-site2-complex:
+    receptor: PHIPA
+    ligand: site2-ligands
+    solvent: pme
+    leap:
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+    # When ligands are generated from SMILES they have a random position.
+    # Setting "pack: yes" pulls the ligand close to the receptor ensuring
+    # that your solvation box won't be too big.
+    pack: yes
+  PHIPA-site3-complex:
+    receptor: PHIPA
+    ligand: site3-ligands
+    solvent: pme
+    leap:
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+    # When ligands are generated from SMILES they have a random position.
+    # Setting "pack: yes" pulls the ligand close to the receptor ensuring
+    # that your solvation box won't be too big.
+    pack: yes
+  PHIPA-site4-complex:
+    receptor: PHIPA
+    ligand: site4-ligands
+    solvent: pme
+    leap:
+      parameters: [leaprc.protein.ff14SB, leaprc.gaff2, leaprc.water.tip3p]
+    # When ligands are generated from SMILES they have a random position.
+    # Setting "pack: yes" pulls the ligand close to the receptor ensuring
+    # that your solvation box won't be too big.
+    pack: yes
+
+protocols:
+  absolute-binding:
+    complex:
+      trailblazer_options:
+        reversed_direction: yes
+        thermodynamic_distance: 1.5
+      alchemical_path: auto
+    solvent:
+      trailblazer_options:
+        reversed_direction: yes
+        thermodynamic_distance: 1.5
+      alchemical_path: auto
+
+PHIPA-site1-experiment:
+  system: PHIPA-site1-complex
+  protocol: absolute-binding
+  restraint:
+    type: Harmonic # Keep the ligand near the protein
+    restrained_receptor_atoms: "(residue 1341 and resname PRO) or (residue 1346 and resname VAL) or (residue 1356 and resname ILE) or (residue 1396 and resname TYR)"
+    spring_constant: 0.006*kilocalories_per_mole/angstroms**2 # 2 kT at 20 angstroms
+PHIPA-site2-experiment:
+  system: PHIPA-site2-complex
+  protocol: absolute-binding
+  restraint:
+    type: Harmonic # Keep the ligand near the protein
+    restrained_receptor_atoms: "residue 1335 and resname CYS"
+    spring_constant: 0.096*kilocalories_per_mole/angstroms**2 # 2 kT at 5 angstroms
+# TODO: Add experiments for sites 3 and 4
+
+# Here we combine the system and the protocol to make an experiment
+experiments: [PHIPA-site1-experiment, PHIPA-site2-experiment]
+# TODO: Add experiments for sites 3 and 4
